@@ -1,0 +1,84 @@
+/* =================================================
+   Layout
+   ================================================= */
+
+html {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/**
+ * Required padding for .navbar-fixed-top.
+ * Remove if using .navbar-static-top.
+ * Change if height of navigation changes.
+ */
+
+body {
+  font-size: 1.6em;
+  padding-top: 70px;
+}
+
+.container > footer {
+  margin: 50px 0;
+}
+
+/* CSS only navbar toggle */
+.navbar-toggle {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.navbar-toggle label {
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 9px 10px;
+}
+
+#toggle-nav-mobile:checked ~ .collapse {
+  display: block;
+  visibility: visible;
+}
+
+/* App CSS
+   ================================================= */
+
+/**
+ * Admin - Posts table
+ */
+
+.postsTable th i {
+  color: #AAA;
+  top: 2px;
+}
+
+.postsTable th:hover,
+.postsTable th:focus {
+  background-color: #F5F5F5;
+}
+
+.postsTable tr {
+  cursor: pointer;
+}
+
+.form-group.required label:after {
+  color: red;
+  content: ' *';
+}
+
+/**
+ * Admin - Markdown-HTML Live Preview
+ */
+
+.form-control.previewPane {
+  height: 500px;
+  overflow-y: auto;
+  resize: none;
+  width: 100%;
+}
