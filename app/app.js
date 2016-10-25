@@ -6,10 +6,11 @@ import 'assets/css/main.scss';
 import React    from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import {Router, hashHistory, Redirect,IndexRoute,Route} from 'react-router';
+import {Router, hashHistory, Redirect, Route} from 'react-router';
 import store from './store';
 
 import Root from './components/root';
+import PostIndex from './components/post-index';
 
 
 const Indie = ()=>{
@@ -28,7 +29,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route component={Root}>
-        <Route path="/posts" component={Indie} />
+        <Route path="/posts" component={PostIndex} />
         <Route path="/admin" component={Admina} />
       </Route>
       <Redirect from="/" to="/posts"></Redirect>

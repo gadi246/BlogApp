@@ -1,12 +1,8 @@
 import React from 'react';
-import {Link} from "react-router";
+import { Link } from 'react-router';
 
-export default React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object
-  },
-
-  render: function () {
+class NavLinks extends React.Component {
+  render() {
     let isActive = this.context.router.isActive(this.props.to, true),
       className = isActive ? "active" : "";
 
@@ -18,4 +14,10 @@ export default React.createClass({
       </li>
     );
   }
-});
+}
+
+NavLinks.contextTypes = {
+  router: React.PropTypes.object
+};
+
+export default NavLinks;
