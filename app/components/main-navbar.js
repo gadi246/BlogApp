@@ -1,23 +1,13 @@
 import React from 'react';
 import NavLinks from './nav-links';
-import { Link } from 'react-router';
+import MobileNavBar from './mobile-navbar';
 
 const NavBar = () => {
   return(
     <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div className="container">
         {/* Brand and toggle get grouped for better mobile display */}
-        <div className="navbar-header">
-          <button type="button" className="navbar-toggle">
-            <span className="sr-only">Toggle navigation</span>
-            <label htmlFor="toggle-nav-mobile">
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-            </label>
-          </button>
-          <Link className="navbar-brand" to="/">Netcraft Academy</Link>
-        </div>
+        <MobileNavBar/>
         <input type="checkbox" id="toggle-nav-mobile" hidden />
         {/* Collect the nav links, forms, and other content for toggling */}
         <div className="collapse navbar-collapse">

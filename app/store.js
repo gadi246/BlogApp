@@ -1,6 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 import data from '../data/posts.json';
 import { posts } from  './reducers/posts';
+import { pager } from  './reducers/pager';
 
 const intialState = {
   posts: {
@@ -10,7 +11,8 @@ const intialState = {
 };
 const reducers = combineReducers({
   // Reducers go here
-  posts
+  posts,
+  pager
 });
 
 const store = createStore(reducers, intialState);

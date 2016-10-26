@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
+import { nextPosts, olderPosts } from '../../actions/action-creators';
 
 class PostList extends React.Component {
   constructor(props){
@@ -13,8 +13,15 @@ class PostList extends React.Component {
     let date = `${day} ${month}, ${year}`;
     return date;
   }
+  renderByPager(posts, pager){
+   return posts.slice(pager, pager + 3);
+  }
   render() {
-    const {posts} = this.props;
+    let {posts, pager} = this.props;
+    console.log(posts);
+    console.log(pager);
+    posts = this.renderByPager(posts, pager);
+    console.log(posts);
     return (
       <section className="col-md-8">
       <h2 className="page-header">Showing 8 posts</h2>
@@ -58,6 +65,14 @@ class PostList extends React.Component {
           );
         })
         }
+        <ul className="pager">
+          <li className="previous">
+            <a href="#" onClick={this.props.olderPosts}>← Older</a>
+          </li>
+          <li className="next">
+            <a href="#" onClick={this.props.nextPosts}>Newer →</a>
+          </li>
+        </ul>
     </section>
     );
 
@@ -68,7 +83,9 @@ class PostList extends React.Component {
 
 
 function mapStateToProps(state) {
-  return {posts: state.posts.all}
+  return {posts: state.posts.all,
+          pager: state.pager
+  }
 }
 
-export default connect(mapStateToProps)(PostList);
+export default connect(mapStateToProps, { olderPosts, nextPosts  })(PostList);
