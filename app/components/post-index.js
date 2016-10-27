@@ -6,13 +6,14 @@ import PostList from './containers/post-list';
    constructor(props){
      super(props);
    }
+   
   render(){
     return (
       <div className="container">
         <h1>The Params {this.props.params.page || 'nothing passed'}</h1>
         <div className="row">
           {/* Blog Entries Column */}
-          <PostList nextPage={this.props.params.page || 0}/>
+          <PostList nextPage={this.props.params.page || 1}/>
         </div>
       </div>
     );

@@ -7,6 +7,10 @@ class PostList extends React.Component {
   constructor(props) {
     super(props);
   }
+  shouldComponentUpdate(nextProps, nextState){
+    return Math.ceil(this.props.posts.length / 3 ) - nextProps.nextPage  >= 0&&
+      nextProps.nextPage > 0;
+  }
 
   renderDate(num) {
     let [,month,day,year] = new Date(+num).toDateString().split(" ");
@@ -14,15 +18,22 @@ class PostList extends React.Component {
     let date = `${day} ${month}, ${year}`;
     return date;
   }
+  extractPage(posts, nextPage){
+    const length = posts.length;
+    let start = nextPage === 1 ? 0 : nextPage * 3 - 3;
+    let end = length % 3 === length - start ?  length  : start + 3;
+    console.log(start, end);
+    return posts.slice(start, end);
+  }
 
   render() {
-    let { posts } = this.props;
-    console.log('post list',this.props.nextPage)
+    let { posts, nextPage } = this.props;
+    const visiblePosts = this.extractPage(posts, nextPage);
     return (
       <section className="col-md-8">
         <h2 className="page-header">Showing 8 posts</h2>
         {/* Begin Post */}
-        {  posts.map((post)=> {
+        {  visiblePosts.map((post)=> {
           return (
             <article key={post.title}>
               <header>
@@ -62,12 +73,12 @@ class PostList extends React.Component {
         })
         }
         <ul className="pager">
-          <li className="previous">
-            <Link to={`/posts/${ +this.props.nextPage - 1}`}>← Older</Link>
-          </li>
-          <li className="next">
-            <Link to={`/posts/${ +this.props.nextPage + 1}`}>Newer →</Link>
-          </li>
+          {+nextPage > 1 ? <li className="previous">
+                             <Link to={`/posts/${ +nextPage - 1}`}>← Older</Link>
+                          </li> : null}
+          {+nextPage < Math.ceil(posts.length / 3 )? <li className="next">
+                            <Link to={`/posts/${ +nextPage + 1}`}>Newer →</Link>
+                           </li> : null}
         </ul>
       </section>
     );
