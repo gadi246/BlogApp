@@ -1,31 +1,27 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { nextPosts, olderPosts } from '../../actions/action-creators';
+import { Link } from 'react-router';
+
 
 class PostList extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
-  renderDate(num){
+  renderDate(num) {
     let [,month,day,year] = new Date(+num).toDateString().split(" ");
     day = day < 10 ? day % 10 : day;
     let date = `${day} ${month}, ${year}`;
     return date;
   }
-  renderByPager(posts, pager){
-   return posts.slice(pager, pager + 3);
-  }
+
   render() {
-    let {posts, pager} = this.props;
-    console.log(posts);
-    console.log(pager);
-    posts = this.renderByPager(posts, pager);
-    console.log(posts);
+    let { posts } = this.props;
+    console.log('post list',this.props.nextPage)
     return (
       <section className="col-md-8">
-      <h2 className="page-header">Showing 8 posts</h2>
-      {/* Begin Post */}
+        <h2 className="page-header">Showing 8 posts</h2>
+        {/* Begin Post */}
         {  posts.map((post)=> {
           return (
             <article key={post.title}>
@@ -67,25 +63,22 @@ class PostList extends React.Component {
         }
         <ul className="pager">
           <li className="previous">
-            <a href="#" onClick={this.props.olderPosts}>← Older</a>
+            <Link to={`/posts/${ +this.props.nextPage - 1}`}>← Older</Link>
           </li>
           <li className="next">
-            <a href="#" onClick={this.props.nextPosts}>Newer →</a>
+            <Link to={`/posts/${ +this.props.nextPage + 1}`}>Newer →</Link>
           </li>
         </ul>
-    </section>
+      </section>
     );
-
-
-
   }
 }
 
 
 function mapStateToProps(state) {
-  return {posts: state.posts.all,
-          pager: state.pager
+  return {
+    posts: state.posts.all
   }
 }
 
-export default connect(mapStateToProps, { olderPosts, nextPosts  })(PostList);
+export default connect(mapStateToProps)(PostList);

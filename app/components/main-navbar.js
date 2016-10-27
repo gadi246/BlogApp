@@ -12,7 +12,7 @@ const NavBar = () => {
         {/* Collect the nav links, forms, and other content for toggling */}
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
-            <NavLinks to="/posts">
+            <NavLinks to="/posts/">
               Posts
             </NavLinks>
             <NavLinks to="/admin">

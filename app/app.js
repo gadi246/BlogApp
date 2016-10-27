@@ -29,10 +29,10 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route component={Root}>
-        <Route path="/posts" component={PostIndex} />
+        <Route path="/posts/(:page)" component={PostIndex} />
         <Route path="/admin" component={Admina} />
       </Route>
-      <Redirect from="/" to="/posts"></Redirect>
+      <Redirect from="/" to="/posts/"></Redirect>
   </Router>
   </Provider>,
   document.querySelector('#root'));
