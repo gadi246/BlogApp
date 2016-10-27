@@ -6,7 +6,7 @@ import 'assets/css/main.scss';
 import React    from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import {Router, hashHistory, Redirect, Route} from 'react-router';
+import {Router, hashHistory, Redirect, Route, IndexRoute} from 'react-router';
 import store from './store';
 
 import Root from './components/root';
@@ -28,8 +28,8 @@ const Admina = ()=>{
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
-      <Route component={Root}>
-        <Route path="/posts/(:page)" component={PostIndex} />
+      <Route  path="/posts/(:page)" component={Root}>
+        <IndexRoute component={PostIndex} />
         <Route path="/admin" component={Admina} />
       </Route>
       <Redirect from="/" to="/posts/"></Redirect>

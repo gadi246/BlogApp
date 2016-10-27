@@ -2,7 +2,7 @@ import React from 'react';
 import NavLinks from './nav-links';
 import MobileNavBar from './mobile-navbar';
 
-const NavBar = () => {
+const NavBar = (props) => {
   return(
     <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div className="container">
@@ -12,7 +12,7 @@ const NavBar = () => {
         {/* Collect the nav links, forms, and other content for toggling */}
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
-            <NavLinks to="/posts/">
+            <NavLinks to={`/posts/${ props.pager || '' }`}>
               Posts
             </NavLinks>
             <NavLinks to="/admin">

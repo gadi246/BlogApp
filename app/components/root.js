@@ -5,7 +5,7 @@ class Root extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar pager={this.props.params.page}/>
         {this.props.children}
       </div>
     )
