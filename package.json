@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "webpack-dev-server --hot --progress --watch-poll",
+    "start": "webpack-dev-server --port 3000 --hot --progress --watch-poll",
     "prebuild": "npm prune; npm install",
     "build": "NODE_ENV=production webpack -p --progress",
     "prebuildwin": "npm prune&npm install",
