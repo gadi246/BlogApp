@@ -8,7 +8,7 @@ class Pager extends React.Component {
       return <Link to={`/posts/${ nextPage - 1}`}>← Older</Link>
     }
     else if (nextPage === 2) {
-      return <Link to={`/posts/`}>← Older</Link>
+      return <Link to="/">← Older</Link>
     }
     else {
       return null;

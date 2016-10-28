@@ -5,6 +5,7 @@ const PostHeader = ({ post, renderDate}) => {
   return(
     <header>
       <h2>
+        {/*using RegExp to remove whitespace and non character or numbers*/}
         <Link to={ `/posts/${post.title.replace(/[^0-9a-zA-Z ]/g,'-').replace(/\s/g, '')}`}>{post.title }</Link>
       </h2>
       <p>

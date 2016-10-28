@@ -32,8 +32,6 @@ class PostList extends React.Component {
   }
 
   render() {
-    let x = 'jQuery - Selectors, DOM';
-    console.log(_.words(x,/[^, ]+/g));
     let { posts, nextPage } = this.props;
     const visiblePosts = this.extractVisiblePosts(posts, nextPage);
     return (
