@@ -1,11 +1,16 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import _ from 'lodash';
+import { connect } from 'react-redux';
 import Pager from '../pager';
+import PostHeader from '../post-header';
+import PostFooter from '../post-footer';
+
 
 
 class PostList extends React.Component {
   constructor(props) {
     super(props);
+    this.renderDate = this.renderDate.bind(this);
   }
   shouldComponentUpdate(nextProps, nextState){
     return Math.ceil(this.props.posts.length / 3 ) - nextProps.nextPage  >= 0&&
@@ -27,51 +32,28 @@ class PostList extends React.Component {
   }
 
   render() {
+    let x = 'jQuery - Selectors, DOM';
+    console.log(_.words(x,/[^, ]+/g));
     let { posts, nextPage } = this.props;
     const visiblePosts = this.extractVisiblePosts(posts, nextPage);
     return (
       <section className="col-md-8">
-        <h2 className="page-header">Showing 8 posts</h2>
+        <h2 className="page-header">{`Showing ${posts.length} posts`}</h2>
         {/* Begin Post */}
         {  visiblePosts.map((post)=> {
           return (
             <article key={post.title}>
-              <header>
-                <h2>
-                  <a href="#">{post.title}</a>
-                </h2>
-                <p>
-                  <small className="glyphicon glyphicon-user"/>
-                  by <a href="#">{post.author}</a>
-                </p>
-                <p>
-                  <small className="glyphicon glyphicon-time"/>
-                  {`Posted on ${this.renderDate(post.date)}`}
-                </p>
-              </header>
+              <PostHeader renderDate={ this.renderDate } post={ post }/>
               {/* Post Description */}
               <p>{post.description}</p>
               <br />
-              <footer className="clearfix">
-                <p className="pull-left">
-                  <b>Tags:&nbsp;</b>
-                  <span>
-                    <a href="#" className="label label-default">{post.tags[0]}</a>
-                  </span>
-                  <span>
-                    <a href="#" className="label label-default">{post.tags[1]}</a>
-                  </span>
-                </p>
-                <a className="btn btn-primary pull-right" href="#">
-                  Read More <i className="glyphicon glyphicon-chevron-right"/>
-                </a>
-              </footer>
+              <PostFooter post={ post }/>
               <hr />
             </article>
-
           );
         })
         }
+        {/* Pager */}
         <Pager nextPage={+nextPage} postsLength={posts.length}/>
       </section>
     );
