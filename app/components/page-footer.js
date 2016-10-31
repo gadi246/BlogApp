@@ -10,7 +10,7 @@ const PageFooter = () => {
         {/* /.col-lg-12 */}
       </div>
       {/* /.row */}
-    </footer>  
+    </footer>
   );
 };
 

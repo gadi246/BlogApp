@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from  'react-redux';
-import { Link } from  'react-router';
+import ShowAll from './side-bar-show-all';
+import Category from './side-bar-category';
+import Author from './side-bar-author';
+import Month from './side-bar-month';
 
 class SideBar extends React.Component {
   extractArray(arr, filter){
@@ -54,62 +57,21 @@ class SideBar extends React.Component {
         {/* Blog Categories Well */}
         <div className="well">
           <h3>Filter Posts</h3>
-          <div className="list-group">
-            <Link to="/posts"  activeClassName="active" className="list-group-item active">
-              <span className="badge">{posts.length}</span>
-              Show All Posts
-            </Link>
-          </div>
+          <ShowAll posts={posts}/>
           <h4>
             <small className="glyphicon glyphicon-tag"/>
-            Category
           </h4>
-          <div className="list-group">
-            {this.toPairs(this.flattenDeep(this.extractArray(posts, 'tags'))).map((item) => {
-              return(
-                <Link key={item[0]} to="/"  activeClassName="active" className="list-group-item">
-                  <span className="badge">{item[1]}</span>
-                  {item[0]}
-                </Link>
-              );
-            })
-            }
-          </div>
+          <Category categories={this.toPairs(this.flattenDeep(this.extractArray(posts, 'tags')))}/>
           <h4>
             <small className="glyphicon glyphicon-user"/>
             Author
           </h4>
-          <div className="list-group">
-            {this.toPairs(this.extractArray(posts, 'author')).map((item) => {
-              return(
-                <Link key={item[0]} to="/" activeClassName="active" className="list-group-item">
-                  <span className="badge">{item[1]}</span>
-                  {item[0]}
-                </Link>
-              );
-            })
-            }
-          </div>
+          <Author authors={this.toPairs(this.extractArray(posts, 'author'))}/>
           <h4>
             <small className="glyphicon glyphicon-time"/>
             Month
           </h4>
-          <div className="list-group">
-            {this.toPairs(this.dateToMonthYear(this.extractArray(posts, 'date'))).map((item) => {
-              return(
-                <div key={item[0].slice(item[0].indexOf(',') + 1)}>
-              <span className="list-group-item disabled">
-                {item[0].slice(item[0].indexOf(',') + 1)}
-              </span>
-                  <Link to="/"  activeClassName="active" className="list-group-item">
-                    <span className="badge">{item[1]}</span>
-                    {item[0].slice(0, item[0].indexOf(',') )}
-                  </Link>
-                </div>
-              )
-            })
-            }
-          </div>
+        <Month months={this.toPairs(this.dateToMonthYear(this.extractArray(posts, 'date')))}/>
         </div>
       </aside>
     );
@@ -123,4 +85,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(SideBar);
+export default connect(mapStateToProps, null, null,{pure : false})(SideBar);
