@@ -6,11 +6,14 @@ import 'assets/css/main.scss';
 import React    from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, hashHistory, IndexRedirect, Route, IndexRoute, Redirect} from 'react-router';
+import {Router, useRouterHistory , Route, Redirect,hashHistory} from 'react-router';
+import { createHashHistory } from 'history';
 import store from './store';
 
 import Root from './components/root';
 import PostIndex from './components/post-index';
+
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 
 const Indie = ()=> {
@@ -36,12 +39,12 @@ const SinglePostView = (props) => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hashHistory}>
+    <Router history={appHistory}>
       <Route component={Root}>
         <Route path="/posts(/:page)" component={PostIndex}/>
         <Route path="/admin" component={Admina}/>
       </Route>
-      <Redirect from="/" to="/posts"></Redirect>
+      <Redirect from="/" to="/posts"/>
     </Router>
   </Provider>,
   document.querySelector('#root'));

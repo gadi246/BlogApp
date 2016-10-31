@@ -60,6 +60,7 @@ class SideBar extends React.Component {
           <ShowAll posts={posts}/>
           <h4>
             <small className="glyphicon glyphicon-tag"/>
+            Category
           </h4>
           <Category categories={this.toPairs(this.flattenDeep(this.extractArray(posts, 'tags')))}/>
           <h4>
