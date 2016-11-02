@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const ShowAll = (props) => {
+const ShowAll = ({posts, setVisibility, currentFilter}) => {
+  const active = currentFilter === 'show all' ? 'active' : '';
   return(
     <div className="list-group">
-      <Link to="/posts"  activeClassName="active" className="list-group-item">
-        <span className="badge">{props.posts.length}</span>
+      <Link to="/posts"   className={`list-group-item ${active}`} onClick={() => setVisibility('show all')}>
+        <span className="badge">{posts.length}</span>
         Show All Posts
       </Link>
     </div>

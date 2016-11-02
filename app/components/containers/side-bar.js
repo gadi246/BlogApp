@@ -1,10 +1,12 @@
 import React from 'react';
 import {connect} from  'react-redux';
+import  { _setSideBarVisibilityFilter } from '../../actions/action-creators';
 import ShowAll from './../side-bar-show-all';
 import Category from './../side-bar-category';
 import Author from './../side-bar-author';
 import Month from './../side-bar-month';
 import Search from './../side-bar-search';
+
 
 class SideBar extends React.Component {
   extractArray(arr, filter) {
@@ -39,31 +41,31 @@ class SideBar extends React.Component {
       return [item, values[ind]]
     });
   }
-
   render() {
-    const {posts, nextPage} = this.props;
+    const {posts, nextPage, _setSideBarVisibilityFilter, currentFilter} = this.props;
+    console.log('sidebar', currentFilter);
     return (
       <aside className="col-md-4">
         {/* Blog Search Well */}
-        <Search />
+        <Search setVisibility={_setSideBarVisibilityFilter}/>
         <div className="well">
           <h3>Filter Posts</h3>
-          <ShowAll posts={posts} nextPage={nextPage}/>
+          <ShowAll posts={posts} nextPage={nextPage} setVisibility={_setSideBarVisibilityFilter} currentFilter={currentFilter}/>
           <h4>
             <small className="glyphicon glyphicon-tag"/>
             Category
           </h4>
-          <Category categories={this.toPairs(this.flattenDeep(this.extractArray(posts, 'tags')))}/>
+          <Category categories={this.toPairs(this.flattenDeep(this.extractArray(posts, 'tags')))} setVisibility={_setSideBarVisibilityFilter} currentFilter={currentFilter}/>
           <h4>
             <small className="glyphicon glyphicon-user"/>
             Author
           </h4>
-          <Author authors={this.toPairs(this.extractArray(posts, 'author'))}/>
+          <Author authors={this.toPairs(this.extractArray(posts, 'author'))} setVisibility={_setSideBarVisibilityFilter} currentFilter={currentFilter}/>
           <h4>
             <small className="glyphicon glyphicon-time"/>
             Month
           </h4>
-          <Month months={this.toPairs(this.dateToMonthYear(this.extractArray(posts, 'date')))}/>
+          <Month months={this.toPairs(this.dateToMonthYear(this.extractArray(posts, 'date')))} setVisibility={_setSideBarVisibilityFilter} currentFilter={currentFilter}/>
         </div>
       </aside>
     );
@@ -73,8 +75,9 @@ class SideBar extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts.all
+    posts: state.posts.all,
+    currentFilter: state.sideBarVisibilityFilter
   }
 }
 
-export default connect(mapStateToProps, null, null, {pure: false})(SideBar);
+export default connect(mapStateToProps, { _setSideBarVisibilityFilter })(SideBar);

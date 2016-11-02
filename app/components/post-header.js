@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from  'react-router';
 
-const PostHeader = ({ post, extractDate}) => {
+const PostHeader = ({ post, extractDate, setVisibility}) => {
   return(
     <header>
       <h2>
@@ -10,7 +10,7 @@ const PostHeader = ({ post, extractDate}) => {
       </h2>
       <p>
         <small className="glyphicon glyphicon-user"/>
-        by <Link to={{pathname:'/posts', query: { author: post.author.toLowerCase().replace(/\s/g, '-')}}}>{post.author}</Link>
+        by <Link to={{pathname:'/posts', query: { author: post.author.toLowerCase().replace(/\s/g, '-')}}} onClick={() => setVisibility(post.author)}>{post.author}</Link>
       </p>
       <p>
         <small className="glyphicon glyphicon-time"/>

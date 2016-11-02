@@ -1,8 +1,8 @@
 import React from 'react';
 
 class Search extends React.Component {
-  constructor() {
-    super();
+  constructor({props}) {
+    super(props);
     this.onInputChange = this.onInputChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
     this.state = {
@@ -41,6 +41,7 @@ class Search extends React.Component {
                    className="form-control"
                    ref={node => this.input = node}
                    value={this.state.inputVal}
+                   onClick={() => this.props.setVisibility('')}
                    onChange={this.onInputChange}/>
               <span className="input-group-btn">
                 <button className="btn btn-default" type="submit">
