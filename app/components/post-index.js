@@ -15,7 +15,7 @@ import SideBar from  './containers/side-bar';
         <div className="row">
           {/* Blog Entries Column */}
           <PostList nextPage={this.props.params.page || 1} query={this.props.location.query}/>
-          <SideBar/>
+          <SideBar nextPage={this.props.params.page}/>
         </div>
 
     );

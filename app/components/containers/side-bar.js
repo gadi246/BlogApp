@@ -41,14 +41,14 @@ class SideBar extends React.Component {
   }
 
   render() {
-    const {posts} = this.props;
+    const {posts, nextPage} = this.props;
     return (
       <aside className="col-md-4">
         {/* Blog Search Well */}
         <Search />
         <div className="well">
           <h3>Filter Posts</h3>
-          <ShowAll posts={posts}/>
+          <ShowAll posts={posts} nextPage={nextPage}/>
           <h4>
             <small className="glyphicon glyphicon-tag"/>
             Category

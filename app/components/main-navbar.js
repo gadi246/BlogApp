@@ -3,6 +3,7 @@ import NavLinks from './nav-links';
 import MobileNavBar from './mobile-navbar';
 
 const NavBar = ({ pager }) => {
+  console.log('nav', pager);
   const nextPage = pager ? `/${pager}` : "";
   return(
     <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">

@@ -41,7 +41,9 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={appHistory}>
       <Route component={Root}>
-        <Route path="/posts(/:page)" component={PostIndex}/>
+        <Route path="/posts" component={PostIndex}>
+          <Route path=":page"component={PostIndex}/>
+        </Route>
         <Route path="/admin" component={Admina}/>
       </Route>
       <Redirect from="/" to="/posts"/>
