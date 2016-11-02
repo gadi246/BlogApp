@@ -1,6 +1,6 @@
 import React from 'react';
 import PostList from './containers/post-list';
-import SideBar from  './side-bar';
+import SideBar from  './containers/side-bar';
 
 
 
@@ -10,11 +10,11 @@ import SideBar from  './side-bar';
    }
 
   render(){
-    console.log('The Params ',this.props.params.page || 'nothing passed');
+    console.log('postindex',this.props.location.query)
     return (
         <div className="row">
           {/* Blog Entries Column */}
-          <PostList nextPage={this.props.params.page || 1}/>
+          <PostList nextPage={this.props.params.page || 1} query={this.props.location.query}/>
           <SideBar/>
         </div>
 

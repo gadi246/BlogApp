@@ -6,7 +6,7 @@ import 'assets/css/main.scss';
 import React    from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, useRouterHistory , Route, Redirect,hashHistory} from 'react-router';
+import {Router, useRouterHistory , Route, Redirect} from 'react-router';
 import { createHashHistory } from 'history';
 import store from './store';
 

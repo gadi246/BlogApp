@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import  _  from 'lodash';
 import { connect } from 'react-redux';
 import Pager from '../pager';
 import PostHeader from '../post-header';
@@ -10,38 +10,56 @@ import PostFooter from '../post-footer';
 class PostList extends React.Component {
   constructor(props) {
     super(props);
-    this.renderDate = this.renderDate.bind(this);
-  }
-  shouldComponentUpdate(nextProps, nextState){
-    return Math.ceil(this.props.posts.length / 3 ) - nextProps.nextPage  >= 0&&
-      nextProps.nextPage > 0;
+    this.extractDate = this.extractDate.bind(this);
   }
 
-  renderDate(num) {
+  extractDate(num) {
     let [,month,day,year] = new Date(+num).toDateString().split(" ");
     day = day < 10 ? day % 10 : day;
-    let date = `${day} ${month}, ${year}`;
-    return date;
+    let fullDate = `${day} ${month}, ${year}`;
+    let compareDate = `${month}-${year}`
+    return [fullDate, compareDate];
   }
-  extractVisiblePosts(posts, nextPage){
-    const length = posts.length;
-    let start = nextPage === 1 ? 0 : nextPage * 3 - 3;
-    let end = length % 3 === length - start ?  length  : start + 3;
-    console.log(start, end);
-    return posts.slice(start, end);
+  extractVisiblePosts(posts){
+    let orederedArr = _.orderBy(posts,['date'],['desc']);
+   let newArr =  _.chunk(orederedArr, 3);
+    return newArr;
+  }
+  getVisibiltePosts(posts, queryKey, query) {
+    switch(queryKey) {
+      case 'author':
+        return posts.filter((post) => post.author.toLowerCase().replace(/\s/g, '-') === query.author);
+      case 'category':
+        return posts.filter((post) => {
+          for(let i = 0;i < post.tags.length;i++){
+            if(post.tags[i].toLowerCase() === query.category){
+              return post;
+            }
+          }
+        }
+        );
+      case 'month':
+        return posts.filter((post) => this.extractDate(post.date)[1] === query.month);
+      case 'search':
+            return this.props.query.search;
+      default :
+         return posts;
+    }
   }
 
   render() {
-    let { posts, nextPage } = this.props;
-    const visiblePosts = this.extractVisiblePosts(posts, nextPage);
+    let { posts, nextPage,query } = this.props;
+    let queryKey = Object.keys(query)[0];
+    let visiblePosts = (this.getVisibiltePosts(posts, queryKey, query));
+    let ChunkedVisiblePosts = this.extractVisiblePosts(visiblePosts);
     return (
       <section className="col-md-8">
-        <h2 className="page-header">{`Showing ${posts.length} posts`}</h2>
+        <h2 className="page-header">{`Showing ${visiblePosts.length} posts`}</h2>
         {/* Begin Post */}
-        {  visiblePosts.map((post)=> {
+        {  ChunkedVisiblePosts[nextPage - 1].map((post)=> {
           return (
             <article key={post.title}>
-              <PostHeader renderDate={ this.renderDate } post={ post }/>
+              <PostHeader extractDate={ this.extractDate } post={ post }/>
               {/* Post Description */}
               <p>{post.description}</p>
               <br />
@@ -52,7 +70,7 @@ class PostList extends React.Component {
         })
         }
         {/* Pager */}
-        <Pager nextPage={+nextPage} postsLength={posts.length}/>
+        <Pager nextPage={+nextPage} query={query} queryKey={queryKey} ChunkedVisiblePosts={ChunkedVisiblePosts.length}/>
       </section>
     );
   }

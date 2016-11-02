@@ -9,16 +9,16 @@ const PostFooter = ({post}) => {
         { post.tags.map(tag => {
           return (
                   <span key={tag}>
-                    <Link to="" className="label label-default">{ tag }</Link>
+                    <Link to={{pathname:'/posts', query: { category: tag.toLowerCase()}}} className="label label-default">{ tag }</Link>
                   </span>
           );
         })
         }
 
       </p>
-      <a className="btn btn-primary pull-right" href="#">
+      <Link className="btn btn-primary pull-right" href="#">
         Read More <i className="glyphicon glyphicon-chevron-right"/>
-      </a>
+      </Link>
     </footer>
   );
 };

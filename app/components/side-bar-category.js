@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
 const Category = (props) => {
-  return(
+  return (
     <div className="list-group">
       {props.categories.map((item) => {
-        return(
-          <Link key={item[0]} to={{pathname:`/posts${item[1] > 3 ? `/${Math.ceil(item[1] / 3)}` : ''}`, query: { category: item[0]}}} activeClassName="active" className="list-group-item">
+        return (
+          <Link key={item[0]}
+                to={{pathname:'/posts', query: { category: item[0].toLowerCase()}}}
+                activeClassName="active" className="list-group-item">
             <span className="badge">{item[1]}</span>
             {item[0]}
           </Link>
