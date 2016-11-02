@@ -1,10 +1,9 @@
 import React from 'react';
 import  _  from 'lodash';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Pager from '../pager';
 import PostHeader from '../post-header';
 import PostFooter from '../post-footer';
-
 
 
 class PostList extends React.Component {
@@ -20,37 +19,52 @@ class PostList extends React.Component {
     let compareDate = `${month}-${year}`
     return [fullDate, compareDate];
   }
-  extractVisiblePosts(posts){
-    let orederedArr = _.orderBy(posts,['date'],['desc']);
-   let newArr =  _.chunk(orederedArr, 3);
+
+  extractVisiblePosts(posts) {
+    let orederedArr = _.orderBy(posts, ['date'], ['desc']);
+    let newArr = _.chunk(orederedArr, 3);
     return newArr;
   }
+
   getVisibiltePosts(posts, queryKey, query) {
-    switch(queryKey) {
+    switch (queryKey) {
       case 'author':
         return posts.filter((post) => post.author.toLowerCase().replace(/\s/g, '-') === query.author);
       case 'category':
         return posts.filter((post) => {
-          for(let i = 0;i < post.tags.length;i++){
-            if(post.tags[i].toLowerCase() === query.category){
-              return post;
+            for (let i = 0; i < post.tags.length; i++) {
+              if (post.tags[i].toLowerCase() === query.category) {
+                return post;
+              }
             }
           }
-        }
         );
       case 'month':
         return posts.filter((post) => this.extractDate(post.date)[1] === query.month);
       case 'search':
-            return this.props.query.search;
+        let term = query.search;
+        let searchArr =_.filter(posts, function (o) {
+          return o.title.toLowerCase().indexOf(term) > -1 || o.author.toLowerCase().indexOf(term) > -1 || o.tags.toString().toLowerCase().indexOf(term) > -1 ||
+            o.description.toLowerCase().indexOf(term) > -1
+        });
+            return searchArr;
       default :
-         return posts;
+        return posts;
     }
   }
 
   render() {
-    let { posts, nextPage,query } = this.props;
+    let {posts, nextPage, query} = this.props;
     let queryKey = Object.keys(query)[0];
     let visiblePosts = (this.getVisibiltePosts(posts, queryKey, query));
+
+    if (visiblePosts.length === 0) {
+      return (
+        <section className="col-md-8">
+          <h2 className="page-header">No Results Found for "{query.search}" ...</h2>
+        </section>
+      );
+    }
     let ChunkedVisiblePosts = this.extractVisiblePosts(visiblePosts);
     return (
       <section className="col-md-8">

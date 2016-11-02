@@ -19,7 +19,7 @@ class Search extends React.Component {
   onSearchSubmit(e) {
     e.preventDefault();
     if (this.state.inputVal) {
-      this.context.router.push(`/posts?search=${this.state.inputVal}`);
+      this.context.router.push(`/posts?search=${this.state.inputVal.toLowerCase().replace(/[^0-9a-zA-Z ]/g,'-').replace(/\s/g, '')}`);
       this.setState({
         inputVal: ''
       })
