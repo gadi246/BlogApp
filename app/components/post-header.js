@@ -6,7 +6,7 @@ const PostHeader = ({ post, extractDate, setVisibility}) => {
     <header>
       <h2>
         {/*using RegExp to remove whitespace and non character or numbers*/}
-        <Link to={ `/posts/${post.title.replace(/[^0-9a-zA-Z ]/g,'-').replace(/\s/g, '')}`}>{post.title }</Link>
+        <Link to={ `/post/${post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-')}`}>{post.title }</Link>
       </h2>
       <p>
         <small className="glyphicon glyphicon-user"/>

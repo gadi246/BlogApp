@@ -42,15 +42,14 @@ class SideBar extends React.Component {
     });
   }
   render() {
-    const {posts, nextPage, _setSideBarVisibilityFilter, currentFilter} = this.props;
-    console.log('sidebar', currentFilter);
+    const {posts,_setSideBarVisibilityFilter, currentFilter} = this.props;
     return (
       <aside className="col-md-4">
         {/* Blog Search Well */}
         <Search setVisibility={_setSideBarVisibilityFilter}/>
         <div className="well">
           <h3>Filter Posts</h3>
-          <ShowAll posts={posts} nextPage={nextPage} setVisibility={_setSideBarVisibilityFilter} currentFilter={currentFilter}/>
+          <ShowAll posts={posts} setVisibility={_setSideBarVisibilityFilter} currentFilter={currentFilter}/>
           <h4>
             <small className="glyphicon glyphicon-tag"/>
             Category

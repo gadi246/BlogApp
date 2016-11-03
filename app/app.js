@@ -12,6 +12,7 @@ import store from './store';
 
 import Root from './components/root';
 import PostIndex from './components/post-index';
+import SingleViewContainer from './components/single-view-container';
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
@@ -45,6 +46,7 @@ ReactDOM.render(
           <Route path=":page"component={PostIndex}/>
         </Route>
         <Route path="/admin" component={Admina}/>
+        <Route path="/post/:title" component={SingleViewContainer}/>
       </Route>
       <Redirect from="/" to="/posts"/>
     </Router>

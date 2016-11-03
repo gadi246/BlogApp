@@ -10,12 +10,11 @@ import SideBar from  './containers/side-bar';
    }
 
   render(){
-    console.log('postindex',this.props.location.query)
     return (
         <div className="row">
           {/* Blog Entries Column */}
           <PostList nextPage={this.props.params.page || 1} query={this.props.location.query}/>
-          <SideBar nextPage={this.props.params.page}/>
+          <SideBar />
         </div>
 
     );

@@ -17,7 +17,7 @@ class PostList extends React.Component {
     let [,month,day,year] = new Date(+num).toDateString().split(" ");
     day = day < 10 ? day % 10 : day;
     let fullDate = `${day} ${month}, ${year}`;
-    let compareDate = `${month}-${year}`
+    let compareDate = `${month}-${year}`;
     return [fullDate, compareDate];
   }
 
@@ -94,7 +94,7 @@ class PostList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts.all,
+    posts: state.posts.all
   }
 }
 

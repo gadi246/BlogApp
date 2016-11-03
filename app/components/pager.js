@@ -20,7 +20,6 @@ class Pager extends React.Component {
     let linkToNext = queryKey ? {pathname:`/posts/${ nextPage + 1}`, query: query} : `/posts/${ nextPage + 1}`;
     let linkToPrevDecrement = queryKey ? {pathname:`/posts/${ nextPage - 1}`, query: query} : `/posts/${ nextPage - 1}`;
     let linkToPrev = queryKey ? {pathname:'/posts', query: query} : '/posts';
-    console.log(nextPage, query[queryKey], ChunkedVisiblePosts);
     return (
       <ul className="pager">
         <li className="previous">
