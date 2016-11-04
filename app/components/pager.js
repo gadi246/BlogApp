@@ -3,12 +3,12 @@ import {Link} from 'react-router';
 
 class Pager extends React.Component {
 
-  renderOlderBtn(nextPage, linkToPrev, linkToPrevDecrement) {
+  renderOlderBtn(nextPage, linkToNext, linkToNextDecrement) {
     if (nextPage > 2) {
-      return <Link to={linkToPrevDecrement}>Newer →</Link>
+      return <Link to={linkToNextDecrement}>Newer →</Link>
     }
     else if (nextPage === 2) {
-      return <Link to={linkToPrev}>Newer →</Link>
+      return <Link to={linkToNext}>Newer →</Link>
     }
     else {
       return null;
@@ -17,17 +17,18 @@ class Pager extends React.Component {
 
   render() {
     let {nextPage, ChunkedVisiblePosts, query, queryKey} = this.props;
-    let linkToNext = queryKey ? {pathname:`/posts/${ nextPage + 1}`, query: query} : `/posts/${ nextPage + 1}`;
-    let linkToPrevDecrement = queryKey ? {pathname:`/posts/${ nextPage - 1}`, query: query} : `/posts/${ nextPage - 1}`;
-    let linkToPrev = queryKey ? {pathname:'/posts', query: query} : '/posts';
-    console.log(nextPage, query[queryKey], ChunkedVisiblePosts);
+
+    let linkToPrev = queryKey ? {pathname:`/posts/${ nextPage + 1}`, query: query} : `/posts/${ nextPage + 1}`;
+    let linkToNextDecrement = queryKey ? {pathname:`/posts/${ nextPage - 1}`, query: query} : `/posts/${ nextPage - 1}`;
+    let linkToNext = queryKey ? {pathname:'/posts', query: query} : '/posts';
+    
     return (
       <ul className="pager">
         <li className="next">
-          {this.renderOlderBtn(nextPage,linkToPrev, linkToPrevDecrement)}
+          {this.renderOlderBtn(nextPage,linkToNext, linkToNextDecrement)}
         </li>
         { nextPage < ChunkedVisiblePosts ? <li className="previous">
-          <Link to={linkToNext}>← Older</Link>
+          <Link to={linkToPrev}>← Older</Link>
         </li> : null}
       </ul>
     );
