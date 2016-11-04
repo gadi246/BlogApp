@@ -16,7 +16,7 @@ const PostFooter = ({post, setVisibility}) => {
         }
 
       </p>
-      <Link className="btn btn-primary pull-right" href="#">
+      <Link className="btn btn-primary pull-right" to={ `/post/${post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-')}`}>
         Read More <i className="glyphicon glyphicon-chevron-right"/>
       </Link>
     </footer>

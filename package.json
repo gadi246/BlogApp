@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "webpack-dev-server --port 3000 --hot --progress --watch-poll",
+    "start": "webpack-dev-server --hot --progress --watch-poll",
     "prebuild": "npm prune; npm install",
     "build": "NODE_ENV=production webpack -p --progress",
     "prebuildwin": "npm prune&npm install",
@@ -20,7 +20,7 @@
     "react-dom": "15.1.0",
     "react-markdown": "2.4.2",
     "react-redux": "4.4.5",
-    "react-router": "2.8.1",
+    "react-router": "3.0.0",
     "redux": "3.5.2"
   },
   "devDependencies": {

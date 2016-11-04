@@ -6,15 +6,15 @@ import 'assets/css/main.scss';
 import React    from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, useRouterHistory , Route, Redirect} from 'react-router';
-import { createHashHistory } from 'history';
+import {Router, useRouterHistory, Route, IndexRedirect, IndexRoute} from 'react-router';
+import {createHashHistory} from 'history';
 import store from './store';
 
 import Root from './components/root';
 import PostIndex from './components/post-index';
-import SingleViewContainer from './components/single-view-container';
-
-const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+import PostList from  './components/containers/post-list';
+import SinglePostView from './components/containers/single-post-view';
+const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 
 
 const Indie = ()=> {
@@ -29,26 +29,23 @@ const Admina = ()=> {
     <h2>Create Post,{func(3, 4)}</h2>
   )
 };
-const SinglePostView = (props) => {
-  return (
-    <div>
-      <h1>Single Post View</h1>
-      <h2>props.params.singlePost</h2>
-    </div>
-  )
-};
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={appHistory}>
-      <Route component={Root}>
-        <Route path="/posts" component={PostIndex}>
-          <Route path=":page"component={PostIndex}/>
+      <Route path="/" component={Root}>
+        {/*  Redirect "/" to "/posts"  */}
+      <IndexRedirect to="/posts"/>
+        <Route path="posts" component={PostIndex}>
+          <IndexRoute component={PostList}/>
+          <Route path=":page" component={PostList}/>
         </Route>
-        <Route path="/admin" component={Admina}/>
-        <Route path="/post/:title" component={SingleViewContainer}/>
+        {/* Use "/post/:title" instead of "/posts/post/:title"  */}
+        <Route component={PostIndex}>
+          <Route path="post/:title" component={SinglePostView}/>
+        </Route>
+        <Route path="admin" component={Admina}/>
       </Route>
-      <Redirect from="/" to="/posts"/>
     </Router>
   </Provider>,
   document.querySelector('#root'));
