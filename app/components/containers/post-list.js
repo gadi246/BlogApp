@@ -2,7 +2,6 @@ import React from 'react';
 import  _  from 'lodash';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router';
-import  { _setSideBarVisibilityFilter } from '../../actions/action-creators';
 import Pager from '../pager';
 import PostHeader from '../post-header';
 import PostFooter from '../post-footer';
@@ -57,7 +56,6 @@ class PostList extends React.Component {
 
   render() {
     let {posts, nextPage, query, _setSideBarVisibilityFilter} = this.props;
-    console.log(nextPage, query);
     let queryKey = Object.keys(query)[0];
     let visiblePosts = (this.getVisibiltePosts(posts, queryKey, query));
     if (visiblePosts.length === 0) {
@@ -75,11 +73,11 @@ class PostList extends React.Component {
         {  ChunkedVisiblePosts[nextPage - 1].map((post)=> {
           return (
             <article key={post.title}>
-              <PostHeader extractDate={ this.extractDate } post={ post } setVisibility={_setSideBarVisibilityFilter}/>
+              <PostHeader extractDate={ this.extractDate } post={ post } />
               {/* Post Description */}
               <p>{post.description}</p>
               <br />
-              <PostFooter post={ post } setVisibility={_setSideBarVisibilityFilter}/>
+              <PostFooter post={ post } />
               <hr />
             </article>
           );
@@ -100,4 +98,4 @@ const mapStateToProps = (state,{ params, location }) =>({
   });
 
 
-export default withRouter(connect(mapStateToProps, { _setSideBarVisibilityFilter })(PostList));
+export default withRouter( connect( mapStateToProps )(PostList));

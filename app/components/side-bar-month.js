@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const Month = ({setVisibility, months, currentFilter}) => {
+const Month = ({ months }) => {
   return(
     <div className="list-group">
       {months.map((item) => {
@@ -10,7 +10,7 @@ const Month = ({setVisibility, months, currentFilter}) => {
               <span className="list-group-item disabled">
                 {item[0].slice(item[0].indexOf(',') + 1)}
               </span>
-            <Link to={{pathname:'/posts', query: { month: item[0].replace(/[^0-9a-zA-Z ]/g,'-')}}}  className={`list-group-item ${currentFilter === item[0] ? 'active' : ''}`} onClick={() => setVisibility(item[0])}>
+            <Link to={{pathname:'/posts', query: { month: item[0].replace(/[^0-9a-zA-Z ]/g,'-')}}}  className={`list-group-item`} activeClassName="active">
               <span className="badge">{item[1]}</span>
               {item[0].slice(0, item[0].indexOf(',') )}
             </Link>

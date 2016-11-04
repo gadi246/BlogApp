@@ -2,19 +2,17 @@ import React from 'react';
 import NavBar from './main-navbar';
 import PageFooter from './page-footer';
 
-class Root extends React.Component {
-  render() {
+const Root = (props) => {
     return (
       <div>
-        <NavBar pager={this.props.params.page}/>
+        <NavBar/>
         <div className="container">
-          {this.props.children}
+          {props.children}
           <hr />
           <PageFooter />
         </div>
       </div>
     )
-  }
-}
+};
 
 export default Root;

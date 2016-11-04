@@ -41,7 +41,6 @@ class Search extends React.Component {
                    className="form-control"
                    ref={node => this.input = node}
                    value={this.state.inputVal}
-                   onClick={() => this.props.setVisibility('')}
                    onChange={this.onInputChange}/>
               <span className="input-group-btn">
                 <button className="btn btn-default" type="submit">

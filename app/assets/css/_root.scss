@@ -52,7 +52,12 @@ body {
 /**
  * Admin - Posts table
  */
-
+.active-main-tab,
+.active-main-tab:focus,
+.active-main-tab:hover{
+  background: #000!important;
+  color: #fff!important;
+}
 .postsTable th i {
   color: #AAA;
   top: 2px;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from  'react-router';
 
-const PostFooter = ({post, setVisibility}) => {
+const PostFooter = ({ post }) => {
   return (
     <footer className="clearfix">
       <p className="pull-left">
@@ -9,7 +9,7 @@ const PostFooter = ({post, setVisibility}) => {
         { post.tags.map(tag => {
           return (
                   <span key={tag}>
-                    <Link to={{pathname:'/posts', query: { category: tag.toLowerCase()}}} className="label label-default" onClick={() => setVisibility(tag)}>{ tag }</Link>
+                    <Link to={{pathname:'/posts', query: { category: tag.toLowerCase()}}} className="label label-default" >{ tag }</Link>
                   </span>
           );
         })
