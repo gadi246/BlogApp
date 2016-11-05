@@ -32,7 +32,7 @@ const Admin = ({params})=> {
       <p>{params.sort}</p>
       <ul>
         <li><Link to="/admin/new/post">New</Link></li>
-        <li><Link to="/admin/edit/post/new post">Edit</Link></li>
+        <li><Link to="/admin/edit/post/post to be edit">Edit</Link></li>
       </ul>
     </div>
   )

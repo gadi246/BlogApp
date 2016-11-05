@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from  'react-router';
 import CodeBlock from '../../code-block';
 import { _fetchSinglePost } from '../../actions/action-creators';
-import  { _setSideBarVisibilityFilter } from '../../actions/action-creators';
-
+import { extractDate } from  '../../utils';
 
 
 
@@ -15,13 +14,6 @@ class SinglePostView extends React.Component {
   }
   componentWillMount(){
     this.props._fetchSinglePost(this.props.title);
-  }
-  extractDate(num) {                 {/*refactor suggestion2 get rid of this it's duplicated */}
-    let [,month,day,year] = new Date(+num).toDateString().split(" ");
-    day = day < 10 ? day % 10 : day;
-    let fullDate = `${day} ${month}, ${year}`;
-    let compareDate = `${month}-${year}`;
-    return [fullDate, compareDate];
   }
   render(){
     if(!this.props.singlePost){
@@ -44,7 +36,7 @@ class SinglePostView extends React.Component {
             </p>
             <p>
               <small className="glyphicon glyphicon-time"/>
-              Posted on {this.extractDate(date)[0]}
+              Posted on {extractDate(date)[0]}
             </p>
             <p>
               <b>Tags:&nbsp;</b>
@@ -76,4 +68,4 @@ function mapStateToProps(state, { params }) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { _fetchSinglePost, _setSideBarVisibilityFilter })(SinglePostView));
+export default withRouter(connect(mapStateToProps, { _fetchSinglePost })(SinglePostView));

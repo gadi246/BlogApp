@@ -14,7 +14,7 @@ const PostHeader = ({ post, extractDate }) => {
       </p>
       <p>
         <small className="glyphicon glyphicon-time"/>
-        {`Posted on ${extractDate(post.date)[0]}`}
+        {`Posted on ${extractDate(post.date).fullDate}`}
       </p>
     </header>
   );
