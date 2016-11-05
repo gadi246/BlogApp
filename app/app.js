@@ -14,17 +14,19 @@ import Root from './components/root';
 import PostIndex from './components/post-index';
 import PostList from  './components/containers/post-list';
 import SinglePostView from './components/containers/single-post-view';
+import AdminContainer from  './components/admin-container';
+import AdminIndex from  './components/containers/admin-index';
 const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 
 
-const AdminContainer = (props)=> {
+const AdminContainer1 = (props)=> {
   return (
     <div>
       {props.children}
     </div>
   )
 };
-const Admin = ({params})=> {
+const Admin1 = ({params})=> {
   return (
     <div>
       <h2>Admin</h2>
@@ -70,8 +72,8 @@ ReactDOM.render(
           <Route path="post/:title" component={SinglePostView}/>
         </Route>
         <Route path="admin" component={AdminContainer}>
-          <IndexRoute component={Admin}/>
-          <Route path=":sort" component={Admin}/>
+          <IndexRoute component={AdminIndex}/>
+          <Route path=":sort" component={AdminIndex}/>
           <Route path="new/post" component={New1}/>
           <Route path="edit/post/:title" component={Edit1}/>
         </Route>

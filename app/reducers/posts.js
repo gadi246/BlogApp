@@ -2,13 +2,12 @@ import { FETCH_SINGLE_POST }  from '../actions/action-creators';
 import _ from 'lodash';
 import {extractDate} from '../utils';
 
-const DEFAULT_STATE = { all: [], visiblePost: null };
 
- const posts = (state = DEFAULT_STATE, action) => {
+ const posts = (state=[] , action) => {
    switch (action.type){
      case FETCH_SINGLE_POST :
          let newState = _.filter(state.all, function (o) { return o.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') === action.payload})[0];
-           return Object.assign({}, state, {visiblePost:newState});
+           return Object.assign({}, state, {visiblePost: newState});
      default:
        return state;
    }
@@ -17,7 +16,7 @@ const DEFAULT_STATE = { all: [], visiblePost: null };
 
 {/*****SELECTORS*****/}
 
- export const getVisiblePosts = (state, query) =>{
+ export const getVisiblePosts = (state, query) => {
    const queryKey = Object.keys(query)[0];
   switch (queryKey) {
     case 'author':
@@ -46,5 +45,6 @@ const DEFAULT_STATE = { all: [], visiblePost: null };
       return state;
   }
 };
+
 
 export default posts;

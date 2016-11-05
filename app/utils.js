@@ -7,3 +7,5 @@ export const extractDate = (num) => {
   let compareDate = `${month}-${year}`;
   return {fullDate, compareDate};
 };
+
+

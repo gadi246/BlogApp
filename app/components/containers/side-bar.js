@@ -5,9 +5,6 @@ import Category from './../side-bar-category';
 import Author from './../side-bar-author';
 import Month from './../side-bar-month';
 import Search from './../side-bar-search';
-import { Link } from  'react-router';
-
-
 
 class SideBar extends React.Component {
   extractArray(arr, filter) {
@@ -43,29 +40,29 @@ class SideBar extends React.Component {
     });
   }
   render() {
-    const { posts } = this.props;
+    const { posts, parentLink} = this.props;
     return (
       <aside className="col-md-4">
         {/* Blog Search Well */}
-        <Search />
+        <Search parentLink={ parentLink } />
         <div className="well">
           <h3>Filter Posts</h3>
-          <ShowAll posts={posts} />
+          <ShowAll posts={posts} parentLink={ parentLink }/>
           <h4>
             <small className="glyphicon glyphicon-tag"/>
             Category
           </h4>
-          <Category categories={this.toPairs(this.flattenDeep(this.extractArray(posts, 'tags')))} />
+          <Category categories={this.toPairs(this.flattenDeep(this.extractArray(posts, 'tags')))} parentLink={ parentLink } />
           <h4>
             <small className="glyphicon glyphicon-user"/>
             Author
           </h4>
-          <Author authors={this.toPairs(this.extractArray(posts, 'author'))} />
+          <Author authors={this.toPairs(this.extractArray(posts, 'author'))} parentLink={ parentLink } />
           <h4>
             <small className="glyphicon glyphicon-time"/>
             Month
           </h4>
-          <Month months={this.toPairs(this.dateToMonthYear(this.extractArray(posts, 'date')))} />
+          <Month months={this.toPairs(this.dateToMonthYear(this.extractArray(posts, 'date')))} parentLink={ parentLink }/>
         </div>
       </aside>
     );

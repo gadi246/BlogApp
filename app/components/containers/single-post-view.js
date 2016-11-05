@@ -16,6 +16,7 @@ class SinglePostView extends React.Component {
     this.props._fetchSinglePost(this.props.title);
   }
   render(){
+    console.log(this.props._fetchSinglePost);
     if(!this.props.singlePost){
       return <h3>Loading...</h3>
     }
@@ -36,7 +37,7 @@ class SinglePostView extends React.Component {
             </p>
             <p>
               <small className="glyphicon glyphicon-time"/>
-              Posted on {extractDate(date)[0]}
+              Posted on {extractDate(date).fullDate}
             </p>
             <p>
               <b>Tags:&nbsp;</b>

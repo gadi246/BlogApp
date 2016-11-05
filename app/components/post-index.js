@@ -13,7 +13,7 @@ import SideBar from  './containers/side-bar';
     return (
         <div className="row">
           {this.props.children}
-          <SideBar />
+          <SideBar parentLink="posts"/>
         </div>
 
     );
