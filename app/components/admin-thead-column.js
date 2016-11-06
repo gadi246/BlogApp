@@ -1,15 +1,17 @@
 import React from 'react';
 
 class AdminTheadColmun extends React.Component  {
+  constructor(props){
+    super(props);
+  }
+  
   renderArrow(selectedColumn, sortArrow, columnName){
     if(selectedColumn.name === columnName){
       if(sortArrow === 'asc'){
-        console.log('up');
-       return <i className="glyphicon glyphicon-chevron-down"></i>
+       return "glyphicon glyphicon-chevron-down";
       }
       else{
-        console.log('down');
-        return  <i className="glyphicon glyphicon-chevron-up"></i>
+        return  "glyphicon glyphicon-chevron-up";
       }
     }
   }
@@ -19,7 +21,8 @@ class AdminTheadColmun extends React.Component  {
       <th onClick={() => sortPosts(columnName)} className="thead-column">
         {columnName}
                 <span className="pull-right">
-                  {this.renderArrow(selectedColumn, sortArrow, columnName)}
+                   <i className={`${this.renderArrow(selectedColumn, sortArrow, columnName)}`}></i>
+
                 </span>
       </th>
     )

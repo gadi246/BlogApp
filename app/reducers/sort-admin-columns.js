@@ -4,20 +4,33 @@ const columns = (state=[], action) => {
   switch (action.type) {
     case SORT_ADMIN_COLUMNS :
       return state.map(column => {
-        return column.name === action.name ? Object.assign({}, {
-          name: column.name,
-          descentSort: !column.descentSort,
-          selected: true
-        }) : Object.assign({}, {
-          name: column.name,
-          descentSort: column.descentSort,
-          selected: false
-        })
+         if(column.name === action.name&& column.selected){
+           return Object.assign({}, {
+            name: column.name,
+            descentSort: !column.descentSort,
+            selected: true
+          })
+        }
+        else if(column.name === action.name&& !column.selected ) {
+           return  Object.assign({}, {
+            name: column.name,
+            descentSort: column.descentSort,
+            selected: true
+          })
+        }
+        else if(column.name !== action.name) {
+           return  Object.assign({}, {
+            name: column.name,
+            descentSort: column.descentSort,
+            selected: false
+          })
+        }
       });
     default:
           return state;
   }
 };
-export  default columns
+export default columns
+
 
 

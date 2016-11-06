@@ -20,7 +20,6 @@ class AdminIndex extends React.Component {
     const {  posts, columns, sortAdminColumns} = this.props;
     const selectedColumn = columns.filter(column => column.selected)[0];
     const sort = selectedColumn.descentSort ? 'desc' : 'asc';
-    console.log('rendered', sort);
     return(
       <div className="row">
         <section className="col-md-8">
@@ -30,9 +29,9 @@ class AdminIndex extends React.Component {
             <tr>
               <th>#
               </th>
-              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="title" sortArrow={sort} selectedColumn={selectedColumn}/>
-              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="author" sortArrow={sort} selectedColumn={selectedColumn}/>
-              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="date" sortArrow={sort} selectedColumn={selectedColumn}/>
+              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="title" sortArrow={sort} selectedColumn={selectedColumn}  />
+              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="author" sortArrow={sort} selectedColumn={selectedColumn} />
+              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="date" sortArrow={sort} selectedColumn={selectedColumn} />
             </tr>
             </thead>
             <tbody>
