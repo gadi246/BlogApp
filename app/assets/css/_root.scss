@@ -58,6 +58,10 @@ body {
   background: #000!important;
   color: #fff!important;
 }
+.thead-column {
+  text-transform: capitalize;
+}
+
 .postsTable th i {
   color: #AAA;
   top: 2px;

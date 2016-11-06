@@ -5,18 +5,18 @@ class AdminTheadColmun extends React.Component  {
     if(selectedColumn.name === columnName){
       if(sortArrow === 'asc'){
         console.log('up');
-       return <i class="glyphicon glyphicon-chevron-down"></i>
+       return <i className="glyphicon glyphicon-chevron-down"></i>
       }
       else{
         console.log('down');
-        return  <i class="glyphicon glyphicon-chevron-up"></i>
+        return  <i className="glyphicon glyphicon-chevron-up"></i>
       }
     }
   }
   render(){
     const { columnName, sortPosts, selectedColumn, sortArrow} = this.props;
     return (
-      <th onClick={() => sortPosts(columnName)}>
+      <th onClick={() => sortPosts(columnName)} className="thead-column">
         {columnName}
                 <span className="pull-right">
                   {this.renderArrow(selectedColumn, sortArrow, columnName)}
