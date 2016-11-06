@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router';
 import * as fromStore from '../../store';
 import { sortAdminColumns } from '../../actions/action-creators';
 import { extractDate } from '../../utils';
@@ -27,7 +28,8 @@ class AdminIndex extends React.Component {
           <table className="table table-bordered table-hover table-striped postsTable">
             <thead>
             <tr>
-              <th>#</th>
+              <th>#
+              </th>
               <AdminTheadColmun sortPosts={sortAdminColumns} columnName="title" sortArrow={sort} selectedColumn={selectedColumn}/>
               <AdminTheadColmun sortPosts={sortAdminColumns} columnName="author" sortArrow={sort} selectedColumn={selectedColumn}/>
               <AdminTheadColmun sortPosts={sortAdminColumns} columnName="date" sortArrow={sort} selectedColumn={selectedColumn}/>
@@ -36,7 +38,7 @@ class AdminIndex extends React.Component {
             <tbody>
             {this.sortPostsByColumns(posts, selectedColumn.name, sort).map((post,i) => {
               return(
-                <tr key={post.title}>
+                <tr key={post.title} onClick={() => this.context.router.push(`/admin/edit/post/${post.title}`)}>
                   <th scope="row">{i + 1}</th>
                   <td>{post.title}</td>
                   <td>{post.author}</td>
@@ -48,7 +50,7 @@ class AdminIndex extends React.Component {
             </tbody>
           </table>
           <footer>
-            <a className="btn btn-primary" href="#">Add New Post</a>
+            <Link className="btn btn-primary" to="/admin/new/post">Add New Post</Link>
           </footer>
         </section>
 
@@ -64,5 +66,8 @@ const mapStateToProps = (state,{ params, location : { query } }) =>({
   query,
   columns : state.columns
 });
+AdminIndex.contextTypes = {
+  router: React.PropTypes.object
+};
 
 export default withRouter( connect( mapStateToProps, { sortAdminColumns })(AdminIndex));
