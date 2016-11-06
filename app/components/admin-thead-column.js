@@ -4,14 +4,14 @@ class AdminTheadColmun extends React.Component  {
   constructor(props){
     super(props);
   }
-  
+
   renderArrow(selectedColumn, sortArrow, columnName){
     if(selectedColumn.name === columnName){
       if(sortArrow === 'asc'){
-       return "glyphicon glyphicon-chevron-down";
+       return "glyphicon glyphicon-chevron-up";
       }
       else{
-        return  "glyphicon glyphicon-chevron-up";
+        return  "glyphicon glyphicon-chevron-down";
       }
     }
   }
