@@ -8,10 +8,7 @@ const intialState = {
     all: data.posts,
     visiblePost: null
   },
-  columns: [{name: 'title', descentSort: true}, {
-    name: 'author',
-    descentSort: true
-  }, {name: 'date', descentSort: true}]
+  columns: [{name: 'title', descentSort: true, selected: false}, { name: 'author', descentSort: true, selected: false }, {name: 'date', descentSort: true, selected: true}]
 };
 const reducers = combineReducers({
   // Reducers go here
@@ -22,9 +19,6 @@ export const getVisiblePosts = (state, query) =>
   fromPosts.getVisiblePosts(state.posts.all, query);
 
 const store = createStore(reducers, intialState);
-store.subscribe(() =>
-  console.log('state:', store.getState())
-);
-console.log('init', store.getState());
+
 
 export default store;

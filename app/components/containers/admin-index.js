@@ -12,12 +12,14 @@ class AdminIndex extends React.Component {
   constructor(props){
     super(props);
   }
-  sortPosts(posts, column='date', sort='desc'){
+  sortPostsByColumns(posts, column='date', sort='desc'){
    return _.orderBy(posts, [column], [sort]);
   }
   render(){
-    const { query, posts, columns, sortAdminColumns} = this.props;
-    console.log('adminindex', sortAdminColumns);
+    const {  posts, columns, sortAdminColumns} = this.props;
+    const selectedColumn = columns.filter(column => column.selected)[0];
+    const sort = selectedColumn.descentSort ? 'desc' : 'asc';
+    console.log('rendered', sort);
     return(
       <div className="row">
         <section className="col-md-8">
@@ -26,13 +28,13 @@ class AdminIndex extends React.Component {
             <thead>
             <tr>
               <th>#</th>
-              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="title" />
-              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="author" />
-              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="date" />
+              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="title" sortArrow={sort} selectedColumn={selectedColumn}/>
+              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="author" sortArrow={sort} selectedColumn={selectedColumn}/>
+              <AdminTheadColmun sortPosts={sortAdminColumns} columnName="date" sortArrow={sort} selectedColumn={selectedColumn}/>
             </tr>
             </thead>
             <tbody>
-            {posts.map((post,i) => {
+            {this.sortPostsByColumns(posts, selectedColumn.name, sort).map((post,i) => {
               return(
                 <tr key={post.title}>
                   <th scope="row">{i + 1}</th>
