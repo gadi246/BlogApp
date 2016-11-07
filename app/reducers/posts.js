@@ -1,5 +1,4 @@
-import { FETCH_SINGLE_POST }  from '../actions/action-creators';
-import { FETCH_POSTS_TITLES } from  '../actions/action-creators';
+import { FETCH_SINGLE_POST, CREATE_POST,  FETCH_POSTS_TITLES}  from '../actions/action-creators';
 import _ from 'lodash';
 import {extractDate} from '../utils';
 
@@ -12,6 +11,22 @@ const DEFAULT_STATE = { all: [], visiblePost: null, arrTitle: []};
            return {...state, visiblePost: newState} ;
      case FETCH_POSTS_TITLES :
            return { ...state ,arrTitle: state.all.map(post => post.title)};
+     case CREATE_POST:
+           let newPost ={
+             date: Date.now()
+           };
+       for (var pair of action.payload.entries()) {
+         if(pair[0] !== 'postMd'&&'postTags'){
+           newPost[pair[0].slice(4).toLowerCase()] = pair[1];
+         }
+         if(pair[0] === 'postTitle'){
+           newPost['mdPath'] = `data/posts/md/${[pair[1]]}.md`
+         }
+         if(pair[0] === 'postTags'){
+           newPost[pair[0].slice(4).toLowerCase()] = [pair[1]];
+         }
+       }
+           return {...state,all:[...state.all,newPost]};
      default:
        return state;
    }

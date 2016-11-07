@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {_fetchPostTitle} from '../actions/action-creators';
-
+import {_fetchPostTitles, createPost} from '../actions/action-creators';
+{/*TASKS: formdata keys, save md file, beautify, tag bug, extract to component, formdata config,reducer */}
 class NewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ class NewPost extends React.Component {
   }
 
   componentWillMount() {
-    this.props._fetchPostTitle();
+    this.props._fetchPostTitles();
   }
 
   onFormSubmit(e) {
@@ -54,12 +54,12 @@ class NewPost extends React.Component {
       valid
     });
 
-    console.log('submit?', isValidSubmit);
+     return isValidSubmit ? this.props.createPost(formData) : '';
   }
 
   render() {
     console.log('this state', this.state);
-    const {postTitle, postMd, postAuthor, postDescription} =this.state.valid;
+    const {postTitle, postMd, postAuthor, postDescription} = this.state.valid;
     return (
       <div className="row">
         {/* Admin - New Post */}
@@ -137,4 +137,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {_fetchPostTitle})(NewPost);
+export default connect(mapStateToProps, { _fetchPostTitles ,createPost })(NewPost);
