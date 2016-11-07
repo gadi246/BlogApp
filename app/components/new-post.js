@@ -9,6 +9,7 @@ class NewPost extends React.Component {
       isUniqTitle: true,
       isInputFilled : true,
       valid: {
+        postDescription:true,
         postAuthor: true,
         postMd: true,
         postTitle: true
@@ -27,6 +28,9 @@ class NewPost extends React.Component {
     var formElm = e.target;
     var formData = new FormData(formElm);
     let valid = {};
+    this.setState({
+      isInputFilled: true
+    });
     let isValidSubmit = true;
     for (var pair of formData.entries()) {
       if (pair[0] === "postTitle") {
@@ -35,7 +39,7 @@ class NewPost extends React.Component {
           isUniqTitle: isValidSubmit
         })
       }
-      if (!pair[1] && pair[0] !== 'postDescription' &&  pair[0] !== 'postTags') {
+      if (!pair[1] && pair[0] !== 'postTags') {
         valid[pair[0]] = false;
         isValidSubmit = false;
          this.setState({
@@ -55,6 +59,7 @@ class NewPost extends React.Component {
 
   render() {
     console.log('this state', this.state);
+    const {postTitle, postMd, postAuthor, postDescription} =this.state.valid;
     return (
       <div className="row">
         {/* Admin - New Post */}
@@ -73,12 +78,12 @@ class NewPost extends React.Component {
             {/* Top Settings */}
             <div className="row">
               <div className="col-sm-6">
-                <div className="form-group required">
+                <div className={`form-group ${postTitle ? '' : 'has-error'} required`}>
                   <label htmlFor="postTitle">Title</label>
                   <input type="text" className="form-control" id="postTitle" name="postTitle" placeholder="Post Title"
                          autofocus/>
                 </div>
-                <div className="form-group  required">
+                <div className={`form-group ${postAuthor ? '' : 'has-error'} required`}>
                   <label htmlFor="postAuthor">Author</label>
                   <input type="text" className="form-control" id="postAuthor" name="postAuthor"
                          placeholder="Post Author"/>
@@ -92,7 +97,7 @@ class NewPost extends React.Component {
                 </div>
               </div>
               <div className="col-sm-6">
-                <div className="form-group required">
+                <div className={`form-group ${postDescription ? '' : 'has-error'} required`}>
                   <label htmlFor="postDescription">Description</label>
                   <textarea className="form-control" id="postDescription" name="postDescription" rows={10}
                             placeholder="Post Description" defaultValue={""}/>
@@ -102,7 +107,7 @@ class NewPost extends React.Component {
             <hr />
             {/* Markdown and Live Preview */}
             <div className="row">
-              <div className="form-group required col-sm-6">
+              <div className={`form-group ${postMd ? '' : 'has-error'} required col-sm-6`}>
                 <label htmlFor="postMd">Markdown</label>
                 <textarea className="form-control previewPane" id="postMd" name="postMd" rows={20}
                           placeholder="Post Markdown" defaultValue={""}/>
