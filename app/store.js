@@ -6,7 +6,8 @@ import columns from './reducers/sort-admin-columns';
 const intialState = {
   posts: {
     all: data.posts,
-    visiblePost: null
+    visiblePost: null,
+    arrTitle: []
   },
   columns: [{name: 'title', descentSort: true, selected: false}, { name: 'author', descentSort: true, selected: false}, {name: 'date', descentSort: true, selected: true}]
 };

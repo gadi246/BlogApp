@@ -16,7 +16,6 @@ class SinglePostView extends React.Component {
     this.props._fetchSinglePost(this.props.title);
   }
   render(){
-    console.log(this.props._fetchSinglePost);
     if(!this.props.singlePost){
       return <h3>Loading...</h3>
     }

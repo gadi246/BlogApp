@@ -1,13 +1,17 @@
 import { FETCH_SINGLE_POST }  from '../actions/action-creators';
+import { FETCH_POSTS_TITLES } from  '../actions/action-creators';
 import _ from 'lodash';
 import {extractDate} from '../utils';
 
+const DEFAULT_STATE = { all: [], visiblePost: null, arrTitle: []};
 
- const posts = (state=[] , action) => {
+ const posts = (state = DEFAULT_STATE, action) => {
    switch (action.type){
      case FETCH_SINGLE_POST :
-         let newState = _.filter(state.all, function (o) { return o.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') === action.payload})[0];
-           return Object.assign({}, state, {visiblePost: newState});
+         let newState = state.all.find((post) => post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') === action.payload);
+           return {...state, visiblePost: newState} ;
+     case FETCH_POSTS_TITLES :
+           return { ...state ,arrTitle: state.all.map(post => post.title)};
      default:
        return state;
    }

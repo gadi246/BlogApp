@@ -1,35 +1,92 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {_fetchPostTitle} from '../actions/action-creators';
 
 class NewPost extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isUniqTitle: true,
+      isInputFilled : true,
+      valid: {
+        postAuthor: true,
+        postMd: true,
+        postTitle: true
+      }
 
+    };
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    this.props._fetchPostTitle();
+  }
+
+  onFormSubmit(e) {
+    e.preventDefault();
+    var formElm = e.target;
+    var formData = new FormData(formElm);
+    let valid = {};
+    let isValidSubmit = true;
+    for (var pair of formData.entries()) {
+      if (pair[0] === "postTitle") {
+        isValidSubmit = this.props.arrTitle.find(title => title === pair[1]) ? false : true;
+        this.setState({
+          isUniqTitle: isValidSubmit
+        })
+      }
+      if (!pair[1] && pair[0] !== 'postDescription' &&  pair[0] !== 'postTags') {
+        valid[pair[0]] = false;
+        isValidSubmit = false;
+         this.setState({
+           isInputFilled: false
+         })
+      }
+      else {
+        valid[pair[0]] = true;
+      }
+    }
+    this.setState({
+      valid
+    });
+
+    console.log('submit?', isValidSubmit);
+  }
+
+  render() {
+    console.log('this state', this.state);
     return (
       <div className="row">
         {/* Admin - New Post */}
         <section className="col-sm-12">
           <h2 className="page-header">Add New Post</h2>
-          {/* Invalid Input Alert */}
-          {/* <div class="alert alert-danger" role="alert">
+
+          { this.state.isUniqTitle ? '':
+           <div className="alert alert-danger" role="alert">
            The entered <strong>Title</strong> already exists in another post.
-           </div> */}
-          {/* <div class="alert alert-danger" role="alert">
+           </div> }
+          {this.state.isInputFilled ? '' :
+           <div className="alert alert-danger" role="alert">
            One or more required fields have no value.
-           </div> */}
-          <form>
+           </div> }
+          <form onSubmit={this.onFormSubmit}>
             {/* Top Settings */}
             <div className="row">
               <div className="col-sm-6">
                 <div className="form-group required">
                   <label htmlFor="postTitle">Title</label>
-                  <input type="text" className="form-control" id="postTitle" name="postTitle" placeholder="Post Title" required autofocus defaultValue />
+                  <input type="text" className="form-control" id="postTitle" name="postTitle" placeholder="Post Title"
+                         autofocus/>
                 </div>
-                <div className="form-group required">
+                <div className="form-group  required">
                   <label htmlFor="postAuthor">Author</label>
-                  <input type="text" className="form-control" id="postAuthor" name="postAuthor" placeholder="Post Author" required defaultValue />
+                  <input type="text" className="form-control" id="postAuthor" name="postAuthor"
+                         placeholder="Post Author"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="postTags">Tags</label>
-                  <input type="text" className="form-control" id="postTags" name="postTags" placeholder="Post Tags" defaultValue />
+                  <input type="text" className="form-control" id="postTags" name="postTags" placeholder="Post Tags"
+                  />
                   <p className="help-block">Separate multiple tags with a comma.
                     e.g.<code>Grunt,Tools</code></p>
                 </div>
@@ -37,7 +94,8 @@ class NewPost extends React.Component {
               <div className="col-sm-6">
                 <div className="form-group required">
                   <label htmlFor="postDescription">Description</label>
-                  <textarea className="form-control" id="postDescription" name="postDescription" rows={10} placeholder="Post Description" required defaultValue={""} />
+                  <textarea className="form-control" id="postDescription" name="postDescription" rows={10}
+                            placeholder="Post Description" defaultValue={""}/>
                 </div>
               </div>
             </div>
@@ -46,24 +104,32 @@ class NewPost extends React.Component {
             <div className="row">
               <div className="form-group required col-sm-6">
                 <label htmlFor="postMd">Markdown</label>
-                <textarea className="form-control previewPane" id="postMd" name="postMd" rows={20} placeholder="Post Markdown" required defaultValue={""} />
+                <textarea className="form-control previewPane" id="postMd" name="postMd" rows={20}
+                          placeholder="Post Markdown" defaultValue={""}/>
               </div>
               <div className="col-sm-6">
                 <label>HTML Preview (read only)</label>
                 {/* Content generated by converting the Markdown to HTML */}
-                <div className="form-control previewPane" />
+                <div className="form-control previewPane"/>
               </div>
             </div>
             <hr />
             <button type="submit" className="btn btn-primary">Save Post</button>
-            { window.location.hash.indexOf('/edit') > -1 ? <button class="btn btn-danger pull-right">Delete Post</button> : "" }
+            { window.location.hash.indexOf('/edit') > -1 ?
+              <button class="btn btn-danger pull-right">Delete Post</button> : "" }
           </form>
         </section>
       </div>
 
 
-  );
+    );
   }
 }
 
-export default NewPost;
+function mapStateToProps(state) {
+  return {
+    arrTitle: state.posts.arrTitle
+  }
+}
+
+export default connect(mapStateToProps, {_fetchPostTitle})(NewPost);
