@@ -25,7 +25,7 @@ class NewPost extends React.Component {
   }
   formIsValid(data){
       this.props.createPost(data);
-      this.context.router.push('/posts');
+      this.context.router.push('/admin');
   }
   validate(data){
     let valid = {};
