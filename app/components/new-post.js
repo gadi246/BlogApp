@@ -67,14 +67,19 @@ class NewPost extends React.Component {
     })
   }
   validate(data){
+    {/* this one is for "has error" classes for each one of the input */}
     let valid = {};
+    {/*this one is for top warning notification if there is any empty input */}
     this.setState({
       isInputFilled: true
     });
+    {/* this one is for submitting this form*/}
     let isValidSubmit = true;
+    {/*Iterating through the form data to search for invalid data... */}
     for (var pair of data.entries()) {
       if (pair[0] === "postTitle") {
         isValidSubmit = this.props.arrTitle.find(title => title === pair[1]) ? false : true;
+        {/*this one is for top warning notification for non unique post title */}
         this.setState({
           isUniqTitle: isValidSubmit
         })
