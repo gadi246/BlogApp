@@ -19,45 +19,6 @@ import AdminIndex from  './components/containers/admin-index';
 import NewPost from  './components/new-post';
 const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 
-
-const AdminContainer1 = (props)=> {
-  return (
-    <div>
-      {props.children}
-    </div>
-  )
-};
-const Admin1 = ({params})=> {
-  return (
-    <div>
-      <h2>Admin</h2>
-      <h2>side bar</h2>
-      <p>{params.sort}</p>
-      <ul>
-        <li><Link to="/admin/new/post">New</Link></li>
-        <li><Link to="/admin/edit/post/post to be edit">Edit</Link></li>
-      </ul>
-    </div>
-  )
-};
-
-
-const New1 = ()=> {
-  return (
-    <h2>New post here</h2>
-  )
-};
-
-const Edit1 = ({params})=> {
-  return (
-    <div>
-      <h2>Edit post</h2>
-      <p>{params.title}</p>
-    </div>
-  )
-};
-
-
 ReactDOM.render(
   <Provider store={store}>
     <Router history={appHistory}>
