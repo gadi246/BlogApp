@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {_fetchPostTitles, createPost} from '../actions/action-creators';
-{/*TASKS: formdata keys, save md file, beautify, tag bug, extract to component, formdata config,reducer */}
+import FormInput from './form-input';
+{/*TASKS:  save md file, */}
 class NewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -22,17 +23,17 @@ class NewPost extends React.Component {
   componentWillMount() {
     this.props._fetchPostTitles();
   }
-
-  onFormSubmit(e) {
-    e.preventDefault();
-    var formElm = e.target;
-    var formData = new FormData(formElm);
+  formIsValid(data){
+      this.props.createPost(data);
+      this.context.router.push('/posts');
+  }
+  validate(data){
     let valid = {};
     this.setState({
       isInputFilled: true
     });
     let isValidSubmit = true;
-    for (var pair of formData.entries()) {
+    for (var pair of data.entries()) {
       if (pair[0] === "postTitle") {
         isValidSubmit = this.props.arrTitle.find(title => title === pair[1]) ? false : true;
         this.setState({
@@ -42,9 +43,9 @@ class NewPost extends React.Component {
       if (!pair[1] && pair[0] !== 'postTags') {
         valid[pair[0]] = false;
         isValidSubmit = false;
-         this.setState({
-           isInputFilled: false
-         })
+        this.setState({
+          isInputFilled: false
+        })
       }
       else {
         valid[pair[0]] = true;
@@ -53,12 +54,16 @@ class NewPost extends React.Component {
     this.setState({
       valid
     });
-
-     return isValidSubmit ? this.props.createPost(formData) : '';
+    return isValidSubmit ? this.formIsValid(data) : '';
+  }
+  onFormSubmit(e) {
+    e.preventDefault();
+    let formElm = e.target;
+    let formData = new FormData(formElm);
+    this.validate(formData);
   }
 
   render() {
-    console.log('this state', this.state);
     const {postTitle, postMd, postAuthor, postDescription} = this.state.valid;
     return (
       <div className="row">
@@ -74,27 +79,18 @@ class NewPost extends React.Component {
            <div className="alert alert-danger" role="alert">
            One or more required fields have no value.
            </div> }
+
           <form onSubmit={this.onFormSubmit}>
             {/* Top Settings */}
             <div className="row">
               <div className="col-sm-6">
-                <div className={`form-group ${postTitle ? '' : 'has-error'} required`}>
-                  <label htmlFor="postTitle">Title</label>
-                  <input type="text" className="form-control" id="postTitle" name="postTitle" placeholder="Post Title"
-                         autofocus/>
-                </div>
-                <div className={`form-group ${postAuthor ? '' : 'has-error'} required`}>
-                  <label htmlFor="postAuthor">Author</label>
-                  <input type="text" className="form-control" id="postAuthor" name="postAuthor"
-                         placeholder="Post Author"/>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="postTags">Tags</label>
-                  <input type="text" className="form-control" id="postTags" name="postTags" placeholder="Post Tags"
-                  />
+                <FormInput filled={postTitle} name='Title' divClass="required" />
+                <FormInput filled={postAuthor} name='Author' divClass="required"/>
+                <FormInput filled={true} name='Tags' >
                   <p className="help-block">Separate multiple tags with a comma.
-                    e.g.<code>Grunt,Tools</code></p>
-                </div>
+                  e.g.<code>Grunt,Tools</code>
+                  </p>
+                </FormInput>
               </div>
               <div className="col-sm-6">
                 <div className={`form-group ${postDescription ? '' : 'has-error'} required`}>
@@ -121,7 +117,7 @@ class NewPost extends React.Component {
             <hr />
             <button type="submit" className="btn btn-primary">Save Post</button>
             { window.location.hash.indexOf('/edit') > -1 ?
-              <button class="btn btn-danger pull-right">Delete Post</button> : "" }
+              <button className="btn btn-danger pull-right">Delete Post</button> : "" }
           </form>
         </section>
       </div>
@@ -136,5 +132,8 @@ function mapStateToProps(state) {
     arrTitle: state.posts.arrTitle
   }
 }
+NewPost.contextTypes = {
+  router: React.PropTypes.object
+};
 
 export default connect(mapStateToProps, { _fetchPostTitles ,createPost })(NewPost);

@@ -4,7 +4,7 @@ import {Link} from  'react-router';
 const PostFooter = ({ post }) => {
   return (
     <footer className="clearfix">
-      <p className="pull-left">
+      { post.tags[0] ? <p className="pull-left">
         <b>Tags:&nbsp;</b>
         { post.tags.map(tag => {
           return (
@@ -15,7 +15,7 @@ const PostFooter = ({ post }) => {
         })
         }
 
-      </p>
+      </p> : '' }
       <Link className="btn btn-primary pull-right" to={ `/post/${post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-')}`}>
         Read More <i className="glyphicon glyphicon-chevron-right"/>
       </Link>

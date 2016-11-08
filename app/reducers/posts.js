@@ -12,18 +12,14 @@ const DEFAULT_STATE = { all: [], visiblePost: null, arrTitle: []};
      case FETCH_POSTS_TITLES :
            return { ...state ,arrTitle: state.all.map(post => post.title)};
      case CREATE_POST:
-           let newPost ={
-             date: Date.now()
+           let newPost = {
+             date: Date.now(),
+             mdPath: `data/posts/md/${action.payload.get('postTitle')}.md`
            };
        for (var pair of action.payload.entries()) {
-         if(pair[0] !== 'postMd'&&'postTags'){
            newPost[pair[0].slice(4).toLowerCase()] = pair[1];
-         }
-         if(pair[0] === 'postTitle'){
-           newPost['mdPath'] = `data/posts/md/${[pair[1]]}.md`
-         }
          if(pair[0] === 'postTags'){
-           newPost[pair[0].slice(4).toLowerCase()] = [pair[1]];
+           newPost[pair[0].slice(4).toLowerCase()] = pair[1].split(',');
          }
        }
            return {...state,all:[...state.all,newPost]};
