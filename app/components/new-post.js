@@ -14,7 +14,8 @@ class NewPost extends React.Component {
         postAuthor: true,
         postMd: true,
         postTitle: true
-      }
+      },
+      pending: false
 
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -24,8 +25,19 @@ class NewPost extends React.Component {
     this.props._fetchPostTitles();
   }
   formIsValid(data){
-      this.props.createPost(data);
+    var promise = new Promise((resolve, reject) => {
+      setTimeout( () => {
+        resolve(this.props.createPost(data));
+      },2000);
+    });
+    promise.then( () => {
+      console.log('back to admin');
       this.context.router.push('/admin');
+    });
+    console.log('Loader...');
+    this.setState({
+      pending: true
+    })
   }
   validate(data){
     let valid = {};
@@ -115,6 +127,7 @@ class NewPost extends React.Component {
               </div>
             </div>
             <hr />
+            {this.state.pending ? <div>Loading...</div> :''}
             <button type="submit" className="btn btn-primary">Save Post</button>
             { window.location.hash.indexOf('/edit') > -1 ?
               <button className="btn btn-danger pull-right">Delete Post</button> : "" }
