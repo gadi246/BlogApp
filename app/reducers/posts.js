@@ -1,6 +1,6 @@
 import { FETCH_SINGLE_POST, CREATE_POST,  FETCH_POSTS_TITLES}  from '../actions/action-creators';
 import _ from 'lodash';
-import {extractDate} from '../utils';
+import {extractDate, toFixedKey} from '../utils';
 
 const DEFAULT_STATE = { all: [], visiblePost: null, arrTitle: []};
 
@@ -17,9 +17,12 @@ const DEFAULT_STATE = { all: [], visiblePost: null, arrTitle: []};
              mdPath: `data/posts/md/${action.payload.get('postTitle')}.md`
            };
        for (var pair of action.payload.entries()) {
-           newPost[pair[0].slice(4).toLowerCase()] = pair[1];
+           newPost[toFixedKey(pair[0])] = pair[1];
          if(pair[0] === 'postTags'){
-           newPost[pair[0].slice(4).toLowerCase()] = pair[1].split(',');
+           newPost[toFixedKey(pair[0])] = pair[1].split(',');
+         }
+         if(pair[0] === 'postMd'){
+           newPost[`${toFixedKey(pair[0])}Source`] = pair[1]
          }
        }
            return {...state,all:[...state.all,newPost]};

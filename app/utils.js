@@ -8,4 +8,4 @@ export const extractDate = (num) => {
   return {fullDate, compareDate};
 };
 
-
+export const toFixedKey = key => key.slice(4).toLowerCase();
