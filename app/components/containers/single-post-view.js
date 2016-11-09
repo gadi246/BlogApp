@@ -23,7 +23,7 @@ class SinglePostView extends React.Component {
     const {mdPath, title, author, tags, date} = this.props.singlePost;
 
     var mardownFile = require(`raw!../../../${mdPath}`);
-
+    
     return (
       <section className="col-md-8">
         {/* Begin Post */}

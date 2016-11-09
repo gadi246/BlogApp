@@ -1,9 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import marked from 'marked';
-import HTMLPreview from './HTMLPreview';
-import {_fetchPostTitles, createPost} from '../actions/action-creators';
-import FormInput from './form-input';
+import HTMLPreview from './../HTMLPreview';
+import {_fetchPostTitles, createPost, _fetchSinglePost} from '../../actions/action-creators';
+import FormInput from './../form-input';
 
 marked.setOptions({
   // GitHub Flavored Markdown
@@ -45,9 +46,11 @@ class NewPost extends React.Component {
   }
   componentWillMount() {
     this.props._fetchPostTitles();
+    {/*for edit Route*/}
+     this.props._fetchSinglePost(this.props.title ? this.props.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') : '');
   }
   onMdChange(e){
-    this.setState({
+      this.setState({
       mdValue: marked(e.target.value)
     })
   }
@@ -109,6 +112,13 @@ class NewPost extends React.Component {
 
   render() {
     const {postTitle, postMd, postAuthor, postDescription} = this.state.valid;
+    {/*<for edit Route*/}
+    const isEdit = this.props.postEdit;
+    console.log('params',this.props.title);
+    if(!isEdit && this.props.title){
+      return <div>Loading...</div>;
+    }
+    {/*for edit Route>*/}
     return (
       <div className="row">
         {/* Admin - New Post */}
@@ -128,9 +138,9 @@ class NewPost extends React.Component {
             {/* Top Settings */}
             <div className="row">
               <div className="col-sm-6">
-                <FormInput filled={postTitle} name='Title' divClass="required" />
-                <FormInput filled={postAuthor} name='Author' divClass="required"/>
-                <FormInput filled={true} name='Tags' >
+                <FormInput filled={postTitle} name='Title' divClass="required"  val={isEdit ? isEdit.title : ''} />
+                <FormInput filled={postAuthor} name='Author' divClass="required"  val={isEdit ? isEdit.author : ''} />
+                <FormInput filled={true} name='Tags' val={isEdit ? isEdit.tags.join(',') : ''}  >
                   <p className="help-block">Separate multiple tags with a comma.
                   e.g.<code>Grunt,Tools</code>
                   </p>
@@ -139,8 +149,12 @@ class NewPost extends React.Component {
               <div className="col-sm-6">
                 <div className={`form-group ${postDescription ? '' : 'has-error'} required`}>
                   <label htmlFor="postDescription">Description</label>
-                  <textarea className="form-control" id="postDescription" name="postDescription" rows={10}
-                            placeholder="Post Description" defaultValue={""}/>
+                  <textarea className="form-control"
+                            id="postDescription"
+                            name="postDescription"
+                            rows={10}
+                            placeholder="Post Description"
+                            />
                 </div>
               </div>
             </div>
@@ -149,10 +163,13 @@ class NewPost extends React.Component {
             <div className="row">
               <div className={`form-group ${postMd ? '' : 'has-error'} required col-sm-6`}>
                 <label htmlFor="postMd">Markdown</label>
-                <textarea className="form-control previewPane" id="postMd" name="postMd" rows={20}
-                          placeholder="Post Markdown" defaultValue={""}
-                          onChange={this.onMdChange}
-                          ref="mdElem" />
+                <textarea className="form-control previewPane"
+                          id="postMd"
+                          name="postMd"
+                          rows={20}
+                          placeholder="Post Markdown"
+                          onChange={this.onMdChange}/>
+                  {/*value={isEdit ? isEdit.mdSource : ''}*/}
               </div>
               <div className="col-sm-6">
                 <label>HTML Preview (read only)</label>
@@ -166,7 +183,8 @@ class NewPost extends React.Component {
             <hr />
             {this.state.pending ? <div>Loading...</div> :''}
             <button type="submit" className="btn btn-primary">Save Post</button>
-            { window.location.hash.indexOf('/edit') > -1 ?
+            {/*for edit Route*>*/}
+            { isEdit ?
               <button className="btn btn-danger pull-right">Delete Post</button> : "" }
           </form>
         </section>
@@ -177,13 +195,15 @@ class NewPost extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state,{ params }) {
   return {
-    arrTitle: state.posts.arrTitle
+    arrTitle: state.posts.arrTitle,
+    title: params.title,
+    postEdit: state.posts.visiblePost
   }
 }
 NewPost.contextTypes = {
   router: React.PropTypes.object
 };
 
-export default connect(mapStateToProps, { _fetchPostTitles ,createPost })(NewPost);
+export default withRouter(connect(mapStateToProps, { _fetchPostTitles ,createPost, _fetchSinglePost})(NewPost));

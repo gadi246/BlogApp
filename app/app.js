@@ -16,7 +16,7 @@ import PostList from  './components/containers/post-list';
 import SinglePostView from './components/containers/single-post-view';
 import AdminContainer from  './components/admin-container';
 import AdminIndex from  './components/containers/admin-index';
-import NewPost from  './components/new-post';
+import NewPost from  './components/containers/new-post';
 const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 
 ReactDOM.render(
