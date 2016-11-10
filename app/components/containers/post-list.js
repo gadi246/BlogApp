@@ -19,10 +19,9 @@ class PostList extends React.Component {
     let newArr = _.chunk(orederedArr, 3);
     return newArr;
   }
-  
+
   render() {
     let {posts, nextPage, query} = this.props;
-    console.log(posts, nextPage, query);
     if (posts.length === 0) {
       return (
         <section className="col-md-8">

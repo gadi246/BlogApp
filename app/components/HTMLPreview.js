@@ -1,9 +1,9 @@
 import React from 'react';
 
-const HTMLPreview = ({ children}) => {
+const HTMLPreview = ({ children, editTxt}) => {
   const createMarkup = () => {
     return{
-      __html: children
+      __html: children || editTxt
     }
   };
   return (
@@ -11,3 +11,4 @@ const HTMLPreview = ({ children}) => {
   )
 };
 export default HTMLPreview;
+

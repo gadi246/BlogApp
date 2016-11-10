@@ -1,38 +1,38 @@
 import React from 'react';
-import marked from 'marked';
 
-class Textarea extends React.Component  {
-  constructor(props){
+class Textarea extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      value:''
+      value: ''
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  onMdChange(e){
+
+  handleChange(e) {
     this.setState({
-      value: marked(e.target.value) || e.target.value
+      value: e.target.value
     })
   }
-  render(){
-    const  {filled, name, children, divClass, val , rows, onMdChange, txtareaCls} = this.props;
-    return(
-      <div className={`form-group ${filled ? '' : 'has-error'} required ${divClass}` }>
-        <label htmlFor={`post${name}`}>{children}</label>
-                  <textarea className={`form-control ${txtareaCls}`}
+
+  render() {
+    const {filled, name, val} = this.props;
+    return (
+      <div className="col-sm-6">
+        <div className={`form-group ${filled ? '' : 'has-error'} required` }>
+          <label htmlFor={`post${name}`}>{name}</label>
+                  <textarea className={`form-control`}
                             id={`post${name}`}
                             name={`post${name}`}
-                            rows={rows}
+                            rows={10}
                             placeholder={`post${name}`}
-                            value={this.state.val || val}
-                            onChange={ this.onMdChange}/>
-        {/*value={isEdit ? isEdit.description : ''}*/}
+                            value={this.state.value || val}
+                            onChange={ this.handleChange}/>
 
+        </div>
       </div>
     )
   }
- 
+
 }
 export default Textarea;
-// rows = 10
-// name =postDescription
