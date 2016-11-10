@@ -8,6 +8,11 @@ class FormInput extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  componentWillMount(){
+    this.setState({
+      value: this.props.val
+    })
+  }
   handleChange(e){
     this.setState({
       value: e.target.value
@@ -24,7 +29,7 @@ class FormInput extends React.Component {
                id={`post${name}`}
                name={`post${name}`}
                placeholder={`Post ${name}`}
-               value={this.state.value || val}
+               value={this.state.value }
                onChange={this.handleChange}
                autofocus/>
         {children}

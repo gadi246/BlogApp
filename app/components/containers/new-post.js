@@ -85,6 +85,7 @@ class NewPost extends React.Component {
     for (var pair of data.entries()) {
       if (pair[0] === "postTitle") {
         isValidSubmit = this.props.arrTitle.find(title => title === pair[1]) ? false : true;
+        isValidSubmit =  this.props.title;
         {/*this one is for top warning notification for non unique post title */}
         this.setState({
           isUniqTitle: isValidSubmit
