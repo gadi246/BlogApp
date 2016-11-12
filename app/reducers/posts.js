@@ -2,7 +2,7 @@ import { FETCH_SINGLE_POST, CREATE_POST,  FETCH_POSTS_TITLES}  from '../actions/
 import _ from 'lodash';
 import {extractDate, toFixedKey} from '../utils';
 
-const DEFAULT_STATE = { all: [], visiblePost: null, arrTitle: []};
+const DEFAULT_STATE = { all: [], visiblePost: null, arrTitles: []};
 
  const posts = (state = DEFAULT_STATE, action) => {
    switch (action.type){
@@ -10,7 +10,7 @@ const DEFAULT_STATE = { all: [], visiblePost: null, arrTitle: []};
          let newState = state.all.find((post) => post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') === action.payload) || null;
            return {...state, visiblePost: newState} ;
      case FETCH_POSTS_TITLES :
-           return { ...state ,arrTitle: state.all.map(post => post.title)};
+           return { ...state ,arrTitles: state.all.map(post => post.title)};
      case CREATE_POST:
            let newPost = {
              date: Date.now(),

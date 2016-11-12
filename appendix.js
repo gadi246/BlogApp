@@ -27,3 +27,4 @@ function funky() {
 }
 
 let newState = state.all.find((post) => post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') === action.payload);
+

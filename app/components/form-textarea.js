@@ -8,6 +8,11 @@ class Textarea extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  componentWillMount(){
+    this.setState({
+      value: this.props.val
+    })
+  }
 
   handleChange(e) {
     this.setState({
@@ -26,7 +31,7 @@ class Textarea extends React.Component {
                             name={`post${name}`}
                             rows={10}
                             placeholder={`post${name}`}
-                            value={this.state.value || val}
+                            value={this.state.value}
                             onChange={ this.handleChange}/>
 
         </div>

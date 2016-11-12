@@ -7,7 +7,7 @@ const intialState = {
   posts: {
     all: data.posts,
     visiblePost: null,
-    arrTitle: []
+    arrTitles: []
   },
   columns: [{name: 'title', descentSort: true, selected: false}, { name: 'author', descentSort: true, selected: false}, {name: 'date', descentSort: true, selected: true}]
 };

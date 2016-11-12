@@ -19,11 +19,10 @@ class SinglePostView extends React.Component {
     if(!this.props.singlePost){
       return <h3>Loading...</h3>
     }
-    const { _setSideBarVisibilityFilter } = this.props;
     const {mdPath, title, author, tags, date} = this.props.singlePost;
 
     var mardownFile = require(`raw!../../../${mdPath}`);
-    
+
     return (
       <section className="col-md-8">
         {/* Begin Post */}
@@ -32,7 +31,7 @@ class SinglePostView extends React.Component {
             <h1 className="page-header">{title}</h1>
             <p>
               <small className="glyphicon glyphicon-user"/>
-              by <Link to={{pathname:'/posts', query: { author: author.toLowerCase().replace(/\s/g, '-')}}} onClick={() => _setSideBarVisibilityFilter(author)}>{author}</Link>
+              by <Link to={{pathname:'/posts', query: { author: author.toLowerCase().replace(/\s/g, '-')}}} >{author}</Link>
             </p>
             <p>
               <small className="glyphicon glyphicon-time"/>
@@ -43,7 +42,7 @@ class SinglePostView extends React.Component {
               { tags.map(tag => {
                 return(
                   <span key={tag}>
-                   <Link to={{pathname:'/posts', query: { category: tag.toLowerCase()}}} className="label label-default" onClick={() => _setSideBarVisibilityFilter(tag)}>{ tag }</Link>
+                   <Link to={{pathname:'/posts', query: { category: tag.toLowerCase()}}} className="label label-default" >{ tag }</Link>
                   </span>
                   );
               })
