@@ -4,6 +4,8 @@ export const FETCH_SINGLE_POST  = 'FETCH_SINGLE_POST';
 export const SORT_ADMIN_COLUMNS = 'SORT_ADMIN_DATA';
 export const FETCH_POSTS_TITLES = 'FETCH_POSTS_TITLES';
 export const CREATE_POST = 'CREATE_POST';
+export const SAVE_EDIT_POST = 'SAVE_EDIT_POST';
+export const DELETE_POST = 'DELETE_POST';
 
 
 
@@ -36,5 +38,17 @@ export const createPost = (data)=> {
     payload: data
   }
 };
-
+export const saveEditPost = (data, originalTitle) => {
+  return{
+    type: SAVE_EDIT_POST,
+    data,
+    originalTitle
+  }
+};
+export const deletePost = (title) => {
+  return {
+    type: DELETE_POST,
+    title
+  }
+};
 

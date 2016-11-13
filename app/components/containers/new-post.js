@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import marked from 'marked';
-import {_fetchPostTitles, createPost, _fetchSinglePost} from '../../actions/action-creators';
+import {_fetchPostTitles, createPost, _fetchSinglePost, saveEditPost, deletePost} from '../../actions/action-creators';
 import FormInput from './../form-input';
 import Textarea from  './../form-textarea';
 import MDFormInput from '../md-form-input';
@@ -48,10 +48,13 @@ class NewPost extends React.Component {
     {/*for edit Route*/}
      this.props._fetchSinglePost(this.props.title ? this.props.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') : '');
   }
+  componentWillUnmount(){
+    this.props._fetchSinglePost(null);
+  }
   formIsValid(data){
     var promise = new Promise((resolve, reject) => {
       setTimeout( () => {
-        resolve(this.props.createPost(data));
+        resolve(this.props.saveEditPost(data, this.props.title));
       },2000);
     });
     promise.then( () => {
@@ -109,16 +112,11 @@ class NewPost extends React.Component {
     const {postTitle, postMd, postAuthor, postDescription} = this.state.valid;
     {/*<for edit Route*/}
     const isEdit = this.props.postEdit;
-    console.log('params',this.props.title);
     if(!isEdit && this.props.title){
+      console.log('empty');
       return <div>Loading...</div>;
     }
-    if(isEdit){
-      if(isEdit.title !== this.props.title){
-        return <div>Loading...</div>;
-      }
-    }
-    let mdFile =  this.props.postEdit ? require(`raw!../../../${this.props.postEdit.mdPath}`) : '';
+    let mdFile =  this.props.postEdit ? this.props.postEdit.mdSource || require(`raw!../../../${this.props.postEdit.mdPath}`) : '';
     {/*for edit Route>*/}
     return (
       <div className="row">
@@ -151,13 +149,13 @@ class NewPost extends React.Component {
             </div>
             <hr />
             {/* Markdown and Live Preview */}
-            <MDFormInput filled={postMd} val={isEdit ? mdFile || isEdit.mdSource : ''}/>
+            <MDFormInput filled={postMd} val={isEdit ? mdFile : ''}/>
             <hr />
             {this.state.pending ? <div>Loading...</div> :''}
             <button type="submit" className="btn btn-primary">Save Post</button>
             {/*for edit Route*>*/}
             { isEdit ?
-              <button className="btn btn-danger pull-right">Delete Post</button> : "" }
+              <button className="btn btn-danger pull-right" onClick={() => this.props.deletePost(this.props.title)}>Delete Post</button> : "" }
           </form>
         </section>
       </div>
@@ -178,4 +176,4 @@ NewPost.contextTypes = {
   router: React.PropTypes.object
 };
 
-export default withRouter(connect(mapStateToProps, { _fetchPostTitles ,createPost, _fetchSinglePost})(NewPost));
+export default withRouter(connect(mapStateToProps, { _fetchPostTitles ,createPost, _fetchSinglePost, saveEditPost, deletePost})(NewPost));

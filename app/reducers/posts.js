@@ -1,4 +1,4 @@
-import { FETCH_SINGLE_POST, CREATE_POST,  FETCH_POSTS_TITLES}  from '../actions/action-creators';
+import { FETCH_SINGLE_POST, CREATE_POST,  FETCH_POSTS_TITLES, SAVE_EDIT_POST, DELETE_POST}  from '../actions/action-creators';
 import _ from 'lodash';
 import {extractDate, toFixedKey} from '../utils';
 
@@ -26,6 +26,20 @@ const DEFAULT_STATE = { all: [], visiblePost: null, arrTitles: []};
          }
        }
            return {...state,all:[...state.all,newPost]};
+     case SAVE_EDIT_POST:
+       let editPost = {};
+       for (var pair of action.data.entries()) {
+         editPost[toFixedKey(pair[0])] = pair[1];
+         if(pair[0] === 'postTags' && pair[0] !== 'postMd'){
+           editPost[toFixedKey(pair[0])] = pair[1].split(',');
+         }
+         if(pair[0] === 'postMd'){
+           editPost[`${toFixedKey(pair[0])}Source`] = `${pair[1]}`
+         }
+       }
+       return {...state,all:[...state.all.map(post => post.title === action.originalTitle ? {...post,...editPost} : post)]};
+     case DELETE_POST:
+           return {...state,all:[...state.all.filter(post => post.title !== action.title)]};
      default:
        return state;
    }

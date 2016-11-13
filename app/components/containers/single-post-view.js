@@ -15,11 +15,17 @@ class SinglePostView extends React.Component {
   componentWillMount(){
     this.props._fetchSinglePost(this.props.title);
   }
+  componentWillUnmount(){
+    this.props._fetchSinglePost(null);
+  }
   render(){
     if(!this.props.singlePost){
+      console.log('empty');
       return <h3>Loading...</h3>
     }
-    const {mdPath, title, author, tags, date} = this.props.singlePost;
+
+    const {mdPath, title, author, tags, date, coco} = this.props.singlePost;
+    console.log('content', title );
 
     var mardownFile = require(`raw!../../../${mdPath}`);
 
