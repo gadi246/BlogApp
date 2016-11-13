@@ -26,7 +26,7 @@ marked.setOptions({
 });
 
 
-{/*TASKS:  save md file, */}
+{/*TASKS:  delete is default to 'submit', */}
 class NewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +54,7 @@ class NewPost extends React.Component {
   formIsValid(data){
     var promise = new Promise((resolve, reject) => {
       setTimeout( () => {
-        resolve(this.props.saveEditPost(data, this.props.title));
+        resolve( this.props.title ? this.props.saveEditPost(data, this.props.title): this.props.createPost(data));
       },2000);
     });
     promise.then( () => {
