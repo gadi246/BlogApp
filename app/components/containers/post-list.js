@@ -6,7 +6,7 @@ import * as fromStore from '../../store';
 import Pager from '../pager';
 import PostHeader from '../post-header';
 import PostFooter from '../post-footer';
-import { extractDate } from '../../utils';
+import { extractDate } from '../../UTILS';
 
 
 class PostList extends React.Component {

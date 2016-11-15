@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from  'react-router';
 import CodeBlock from '../../code-block';
 import * as fromStore from '../../store';
-import { extractDate } from  '../../utils';
+import { extractDate } from  '../../UTILS';
 
 
 

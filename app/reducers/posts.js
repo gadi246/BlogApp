@@ -1,6 +1,6 @@
 import {CREATE_POST,  FETCH_POSTS_TITLES, SAVE_EDIT_POST, DELETE_POST}  from '../actions/action-creators';
 import _ from 'lodash';
-import {extractDate, toFixedKey} from '../utils';
+import {extractDate, toFixedKey} from '../UTILS';
 
 const DEFAULT_STATE = { all: [], arrTitles: []};
 

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router';
 import * as fromStore from '../../store';
 import { sortAdminColumns } from '../../actions/action-creators';
-import { extractDate } from '../../utils';
+import { extractDate } from '../../UTILS';
 
 import SideBar from './side-bar';
 import AdminTheadColmun from '../admin-thead-column';
