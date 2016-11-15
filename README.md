@@ -4,6 +4,6 @@
 
 Run `npm install` and then `npm start`
 
-## Instructions
-
+## Live Demo
+[GitHub](http://github.com)
 Open README.html in the browser
