@@ -61,6 +61,12 @@ body {
 .thead-column {
   text-transform: capitalize;
 }
+.glyphicon-user,
+.glyphicon-time,
+.label-default,
+.glyphicon-tag{
+margin-right: 6px;
+}
 .postsTable th i {
   color: #AAA;
   top: 2px;
