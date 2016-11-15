@@ -31,8 +31,8 @@ class MDFormInput extends React.Component {
   }
   componentWillMount(){
     this.setState({
-      mdValue: this.props.val,
-      mdPreview: marked(this.props.val)
+      mdValue: this.props.val || '',
+      mdPreview: marked(this.props.val) || ''
     })
   }
   onMdChange(e){

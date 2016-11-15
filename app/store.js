@@ -6,7 +6,6 @@ import columns from './reducers/sort-admin-columns';
 const intialState = {
   posts: {
     all: data.posts,
-    visiblePost: null,
     arrTitles: []
   },
   columns: [{name: 'title', descentSort: true, selected: false}, { name: 'author', descentSort: true, selected: false}, {name: 'date', descentSort: true, selected: true}]
@@ -18,6 +17,11 @@ const reducers = combineReducers({
 });
 export const getVisiblePosts = (state, query) =>
   fromPosts.getVisiblePosts(state.posts.all, query);
+
+export const getSinglePost = (state, title) =>
+  fromPosts.getSinglePost(state.posts.all, title);
+export const getPostsTitles =(state) => 
+   fromPosts.getPostsTitles(state.posts.all);
 
 const store = createStore(reducers, intialState);
 store.subscribe(() =>

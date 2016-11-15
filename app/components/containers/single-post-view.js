@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import { Link, withRouter } from  'react-router';
 import CodeBlock from '../../code-block';
-import { _fetchSinglePost } from '../../actions/action-creators';
+import * as fromStore from '../../store';
 import { extractDate } from  '../../utils';
 
 
@@ -12,19 +12,8 @@ class SinglePostView extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentWillMount(){
-    this.props._fetchSinglePost(this.props.title);
-  }
-  componentWillUnmount(){
-    this.props._fetchSinglePost(null);
-  }
   render(){
-    if(!this.props.singlePost){
-      console.log('empty');
-      return <h3>Loading...</h3>
-    }
-
-    const {mdPath, title, author, tags, date, coco} = this.props.singlePost;
+    const {mdPath, title, author, tags, date} = this.props.singlePost;
     console.log('content', title );
 
     var mardownFile = require(`raw!../../../${mdPath}`);
@@ -68,9 +57,9 @@ class SinglePostView extends React.Component {
 
 function mapStateToProps(state, { params }) {
   return {
-    singlePost: state.posts.visiblePost,
-    title: params.title
+    singlePost: fromStore.getSinglePost(state, params.title)
+
   }
 }
 
-export default withRouter(connect(mapStateToProps, { _fetchSinglePost })(SinglePostView));
+export default withRouter(connect(mapStateToProps)(SinglePostView));

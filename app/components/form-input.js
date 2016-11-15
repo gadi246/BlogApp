@@ -10,7 +10,7 @@ class FormInput extends React.Component {
   }
   componentWillMount(){
     this.setState({
-      value: this.props.val
+      value: this.props.val || ''
     })
   }
   handleChange(e){

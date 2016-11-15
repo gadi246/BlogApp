@@ -1,16 +1,11 @@
-import { FETCH_SINGLE_POST, CREATE_POST,  FETCH_POSTS_TITLES, SAVE_EDIT_POST, DELETE_POST}  from '../actions/action-creators';
+import {CREATE_POST,  FETCH_POSTS_TITLES, SAVE_EDIT_POST, DELETE_POST}  from '../actions/action-creators';
 import _ from 'lodash';
 import {extractDate, toFixedKey} from '../utils';
 
-const DEFAULT_STATE = { all: [], visiblePost: null, arrTitles: []};
+const DEFAULT_STATE = { all: [], arrTitles: []};
 
  const posts = (state = DEFAULT_STATE, action) => {
    switch (action.type){
-     case FETCH_SINGLE_POST :
-         let newState = state.all.find((post) => post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') === action.payload) || null;
-           return {...state, visiblePost: newState} ;
-     case FETCH_POSTS_TITLES :
-           return { ...state ,arrTitles: state.all.map(post => post.title)};
      case CREATE_POST:
            let newPost = {
              date: Date.now(),
@@ -19,7 +14,7 @@ const DEFAULT_STATE = { all: [], visiblePost: null, arrTitles: []};
        for (var pair of action.payload.entries()) {
            newPost[toFixedKey(pair[0])] = pair[1];
          if(pair[0] === 'postTags'){
-           newPost[toFixedKey(pair[0])] = pair[1].split(',');
+           newPost[toFixedKey(pair[0])] = pair[1] ? pair[1].split(',') : '';
          }
          if(pair[0] === 'postMd'){
            newPost[`${toFixedKey(pair[0])}Source`] = `${pair[1]}`
@@ -76,6 +71,14 @@ const DEFAULT_STATE = { all: [], visiblePost: null, arrTitles: []};
     default :
       return state;
   }
+};
+
+export const getSinglePost = (state, title) => {
+ return state.find((post) => post.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') === title);
+};
+
+export const getPostsTitles = (state) => {
+  return state.map(post => post.title);
 };
 
 

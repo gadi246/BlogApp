@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import marked from 'marked';
-import {_fetchPostTitles, createPost, _fetchSinglePost, saveEditPost, deletePost} from '../../actions/action-creators';
+import { createPost, saveEditPost, deletePost} from '../../actions/action-creators';
+import * as fromStore from '../../store';
 import FormInput from './../form-input';
 import Textarea from  './../form-textarea';
 import MDFormInput from '../md-form-input';
@@ -27,7 +28,7 @@ marked.setOptions({
 
 
 {/*TASKS:  delete is default to 'submit', */}
-class NewPost extends React.Component {
+class PostForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,33 +39,14 @@ class NewPost extends React.Component {
         postAuthor: true,
         postMd: true,
         postTitle: true
-      },
-      pending: false
+      }
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
-  }
-  componentWillMount() {
-    this.props._fetchPostTitles();
-    {/*for edit Route*/}
-     this.props._fetchSinglePost(this.props.title ? this.props.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-') : '');
-  }
-  componentWillUnmount(){
-    this.props._fetchSinglePost(null);
+    this.deletePost = this.deletePost.bind(this);
   }
   formIsValid(data){
-    var promise = new Promise((resolve, reject) => {
-      setTimeout( () => {
-        resolve( this.props.title ? this.props.saveEditPost(data, this.props.title): this.props.createPost(data));
-      },2000);
-    });
-    promise.then( () => {
-      console.log('back to admin');
+    this.props.title ? this.props.saveEditPost(data, this.props.title): this.props.createPost(data);
       this.context.router.push('/admin');
-    });
-    console.log('Loader...');
-    this.setState({
-      pending: true
-    })
   }
   validate(data){
     {/* this one is for "has error" classes for each one of the input */}
@@ -107,16 +89,19 @@ class NewPost extends React.Component {
     let formData = new FormData(formElm);
     this.validate(formData);
   }
+  deletePost(e){
+    e.preventDefault();
+    this.props.deletePost(this.props.title);
+    this.context.router.push('/admin');
+  }
 
   render() {
     const {postTitle, postMd, postAuthor, postDescription} = this.state.valid;
+    console.log('render');
+    console.log(this.props.title);
     {/*<for edit Route*/}
-    const isEdit = this.props.postEdit;
-    if(!isEdit && this.props.title){
-      console.log('empty');
-      return <div>Loading...</div>;
-    }
-    let mdFile =  this.props.postEdit ? this.props.postEdit.mdSource || require(`raw!../../../${this.props.postEdit.mdPath}`) : '';
+    const currentEdit = this.props.postEdit;
+    let mdFile =  currentEdit ? this.props.postEdit.mdSource || require(`raw!../../../${this.props.postEdit.mdPath}`) : '';
     {/*for edit Route>*/}
     return (
       <div className="row">
@@ -137,25 +122,25 @@ class NewPost extends React.Component {
             {/* Top Settings */}
             <div className="row">
               <div className="col-sm-6">
-                <FormInput filled={postTitle} name='Title' divClass="required"  val={isEdit ? isEdit.title : ''} />
-                <FormInput filled={postAuthor} name='Author' divClass="required"  val={isEdit ? isEdit.author : ''} />
-                <FormInput filled={true} name='Tags' val={isEdit ? isEdit.tags.join(',') : ''}  >
+                <FormInput filled={postTitle} name='Title' divClass="required"  val={ currentEdit.title } />
+                <FormInput filled={postAuthor} name='Author' divClass="required"  val={ currentEdit.author } />
+                <FormInput filled={true} name='Tags' val={ currentEdit.tags ? currentEdit.tags.join(',') : '' }  >
                   <p className="help-block">Separate multiple tags with a comma.
                   e.g.<code>Grunt,Tools</code>
                   </p>
                 </FormInput>
               </div>
-              <Textarea filled={postDescription} name="Description" val={isEdit ? isEdit.description : ''}/>
+              <Textarea filled={postDescription} name="Description" val={ currentEdit.description }/>
             </div>
             <hr />
             {/* Markdown and Live Preview */}
-            <MDFormInput filled={postMd} val={isEdit ? mdFile : ''}/>
+            <MDFormInput filled={postMd} val={ mdFile }/>
             <hr />
             {this.state.pending ? <div>Loading...</div> :''}
             <button type="submit" className="btn btn-primary">Save Post</button>
             {/*for edit Route*>*/}
-            { isEdit ?
-              <button className="btn btn-danger pull-right" onClick={() => this.props.deletePost(this.props.title)}>Delete Post</button> : "" }
+            { currentEdit ?
+              <button className="btn btn-danger pull-right" onClick={ this.deletePost}>Delete Post</button> : "" }
           </form>
         </section>
       </div>
@@ -167,13 +152,13 @@ class NewPost extends React.Component {
 
 function mapStateToProps(state,{ params }) {
   return {
-    arrTitles: state.posts.arrTitles,
+    arrTitles: fromStore.getPostsTitles(state),
     title: params.title,
-    postEdit: state.posts.visiblePost
+    postEdit: params.title ? fromStore.getSinglePost(state, params.title.replace(/[^0-9a-zA-Z ]/g,' ').split(' ').filter(word => word).join('-')) : ''
   }
 }
-NewPost.contextTypes = {
+PostForm.contextTypes = {
   router: React.PropTypes.object
 };
 
-export default withRouter(connect(mapStateToProps, { _fetchPostTitles ,createPost, _fetchSinglePost, saveEditPost, deletePost})(NewPost));
+export default withRouter(connect(mapStateToProps, { createPost, saveEditPost, deletePost})(PostForm));

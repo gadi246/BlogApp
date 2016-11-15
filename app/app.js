@@ -16,7 +16,7 @@ import PostList from  './components/containers/post-list';
 import SinglePostView from './components/containers/single-post-view';
 import AdminContainer from  './components/admin-container';
 import AdminIndex from  './components/containers/admin-index';
-import NewPost from  './components/containers/new-post';
+import PostForm from  './components/containers/post-form';
 const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 
 ReactDOM.render(
@@ -36,8 +36,8 @@ ReactDOM.render(
         <Route path="admin" component={AdminContainer}>
           <IndexRoute component={AdminIndex}/>
           <Route path=":sort" component={AdminIndex}/>
-          <Route path="new/post" component={NewPost}/>
-          <Route path="edit/post/:title" component={NewPost}/>
+          <Route path="new/post" component={PostForm}/>
+          <Route path="edit/post/:title" component={PostForm}/>
         </Route>
       </Route>
     </Router>
