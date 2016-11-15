@@ -5,5 +5,4 @@
 Run `npm install` and then `npm start`
 
 ## Live Demo
-[GitHub](http://github.com)
-Open README.html in the browser
+[BlogApp](https://rawgit.com/gadi246/BlogApp/master/dist/index.html#/posts)
