@@ -1,5 +1,8 @@
 # Blog App
-###Responsive Blog application with React.js and Redux
+###Main challenges: use of React, React-router, Redux and bootstrap, responsive design layout.
+The app has a main user page with posts list linking to full post page and a filter side-bar.
+Another feature is an administrator page which gives the admin user the ability to edit/add new posts.  
+
 ## Init
 
 Run `npm install` and then `npm start`
